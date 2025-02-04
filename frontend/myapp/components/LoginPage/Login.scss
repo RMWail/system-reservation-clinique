@@ -1,0 +1,137 @@
+.FatherLogin {
+  width: 35%;
+  height: fit-content;
+  border-radius: 18px;
+  margin: 10% auto; /* Centering with some margin */
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 6px #000c15; /* Box shadow for depth */
+
+  ::placeholder {
+    font-size: 14px;
+  }
+
+  .input-groupLogin {
+    margin-top: 20px;
+
+    label {
+      height: 30px;
+      margin: 0 auto;
+      display: block;
+      text-align: center;
+      color: #2196f3;
+    }
+
+    .error {
+      text-align: center;
+      color: red;
+    }
+
+    &.error input {
+      border-color: red;
+    }
+
+    &.success input {
+      border-color: #57cf66;
+    }
+
+    input {
+      display: block;
+      width: 80%;
+      margin: 5px auto;
+      padding: 1rem;
+      border: 1px solid #2196f3;
+      border-radius: 15px;
+      background-color: '#fff';
+      &:focus {
+        border-color: #2196f3; /* Focus border color */
+      }
+    }
+  }
+  
+
+  .btnsFather {
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .creatAccount {
+      width: 100%;
+      margin-top: 15px;
+      margin-left: 30%;
+      h4 {
+        margin: 0;
+        font-size: 1rem;
+        display: inline-block;
+      }
+
+      a {
+        margin-left: 10px;
+        text-decoration: underline;
+        color: #2196f3;
+      }
+    }
+
+    .forgetPass {
+      color: #2196f3;
+      text-decoration: underline;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .input-groupLogin {
+      width: 100%;
+      text-align: center;
+
+      .confirmLogin {
+        width: 50%;
+        height: 40px;
+        text-align: center;
+        background-color: #2196f3;
+        border: 1px solid black;
+        border-radius: 15px;
+        margin: 20px auto;
+        transition: transform 0.3s ease-in-out;
+
+        &:hover {
+          cursor: pointer;
+          background: #1a56db;
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+}
+
+/* Media Queries for Responsiveness */
+
+/* For tablet and mobile screens */
+@media (max-width: 768px) {
+  .FatherLogin {
+    width: 80%; /* Adjust for smaller screen widths */
+    margin: 15% auto; /* Adjust margin for better positioning */
+  }
+
+  .btnsFather .confirmLogin {
+    width: 70%; /* Button width adjustment */
+  }
+
+  .input-groupLogin input {
+    width: 90%; /* Adjust input field width */
+  }
+}
+
+/* For smaller mobile screens */
+@media (max-width: 480px) {
+  .FatherLogin {
+    width: 90%; /* Full width for very small screens */
+    margin: 20% auto;
+  }
+
+  .btnsFather .confirmLogin {
+    width: 80%; /* Button adjustment for small screens */
+  }
+
+  .input-groupLogin label {
+    font-size: 0.9rem; /* Slightly smaller label font */
+  }
+}

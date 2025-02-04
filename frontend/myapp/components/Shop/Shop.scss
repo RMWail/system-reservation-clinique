@@ -1,0 +1,1316 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.shop{
+  width: 100%;
+  height: fit-content;
+ // background-color: rgb(236, 226, 226);
+}
+
+.accountChart {
+  width: 100%;
+ // border: 1px solid aquamarine;
+  display: flex;
+}
+
+.account {
+  margin-top: 2%;
+  margin-left: 2%;
+  height: 120px;
+  width: 120px;
+  text-align: center;
+ // background-color: orange;
+ // border: 2px solid gray;
+  border-radius: 10px;
+  img {
+    width: 60px;
+    height: 50px;
+    border-radius: 35px;
+    margin-top: 10%;
+  //  background-color: yellow;
+  }
+}
+
+.account:hover {
+  cursor: pointer;
+}
+
+.accountOperations {
+  width: 100%;
+  max-width: 170px; /* Set a maximum width to prevent it from being too wide */
+  height: auto; /* Let the height adjust based on content */
+  margin-top: 1%;
+  margin-left: 80%;
+  margin-right: 5%; /* Adjust margins for smaller screens */
+ // margin-left: auto; /* Center the element horizontally */
+  position: fixed; /* Use fixed positioning for consistency */
+  display: flex;
+  justify-content: flex-end; /* Adjust alignment as needed */
+  align-items: center; /* Center content vertically if needed */
+  /* border: 2px solid rgb(205, 21, 168); */
+  //background-color: aquamarine;
+}
+
+/* Media query for tablets and smaller screens */
+@media (max-width: 768px) {
+  .accountOperations {
+    margin-left: 60%;
+    margin-top: 5%;
+    margin-right: 2%;
+    width: 80%; /* Adjust the width for smaller screens */
+   // position: relative; /* Change to relative positioning if needed */
+  }
+}
+
+/* Media query for mobile devices */
+@media (max-width: 480px) {
+  .accountOperations {
+    float: right;
+    margin-left: 60%;
+    width: 100%; /* Make the width 100% for mobile */
+   // margin: 0 0 0 70%; /* Remove margins to maximize space */
+    height: auto; /* Let the height be based on the content */
+    flex-direction: column; /* Stack items vertically */
+  }
+}
+
+@media (max-width: 400px) {
+  .accountOperations {
+    float: right;
+    width: 100%; /* Make the width 100% for mobile */
+   // margin: 0 0 0 80%; /* Remove margins to maximize space */
+    height: auto; /* Let the height be based on the content */
+    flex-direction: column; /* Stack items vertically */
+  }
+}
+.logOut {
+  margin-top: 10%;
+  margin-left: 0%;
+  width: 30%;
+  height: 80px;
+  display: block;
+   span {
+    color: black;
+   } 
+}
+
+.chart {
+ margin-top: 10%;
+ margin-left: 0%;
+ width: 30%;
+ height: 80px;
+  display: flex;
+  span {
+    color: black;
+  }
+  p {
+    width: 20px;
+    height: 20px;
+    margin-top: 40%;
+    margin-left: -45.5%;
+    border-radius: 30px;
+    text-align: center;
+    color: black;
+    z-index: 1; /* Ensures h4 is above the image */
+  }
+  p:hover{
+    cursor: pointer;
+  }
+}
+.chart:hover {
+  cursor: pointer;
+}
+
+.accountAllOrders {
+  margin-top: 10%;
+  margin-left: 0px;
+  width: 30%;
+  height: 80px;
+  display: flex;
+   span {
+    color: black;
+   } 
+   span:hover {
+    cursor: pointer;
+   }
+   p {
+    width: 20px;
+    height: 20px;
+    margin-top: 40%;
+    margin-left: -45.5%;
+    border-radius: 30px;
+    text-align: center;
+    color: white;
+    z-index: 1; /* Ensures h4 is above the image */
+  }
+  p:hover{
+    cursor: pointer;
+  }
+}
+
+
+
+.chartLogo:hover {
+  cursor: pointer;
+}
+
+/* Default styles for large screens (keep existing styles) */
+.cards-container {
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 3%;
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping */
+  justify-content: flex-start; /* Align items to the left */
+}
+
+.Product {
+  width: 250px; /* Default width for large screens */
+  height: 40vh;
+  border: 1.5px solid orange;
+  margin: 4% 0 0 3%;
+  border-radius: 10px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  transform: perspective(800px) rotateX(0) rotateY(0);
+  display: inline-block;
+  overflow: hidden;
+  box-shadow: 0 15px 15px gray;
+
+  /* Nested styles */
+  .itemPhoto {
+    width: 100%;
+    height: 75%;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .itemTitle {
+    width: 100%;
+    height: 12.5%;
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .itemDescription {
+    width: 100%;
+    height: 12.5%;
+  }
+
+  .itemDescription .available,
+  .itemDescription .unavailable {
+    position: absolute;
+    bottom: 90%;
+    width: 100%;
+    height: 10%;
+    padding: 10px;
+    box-sizing: border-box;
+    opacity: 0;
+    transform: translateY(-100%);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    text-align: center;
+    font-weight: bold;
+    line-height: 1.6;
+  }
+
+  .itemDescription .available {
+    color: rgb(12, 234, 9);
+  }
+
+  .itemDescription .unavailable {
+    color: red;
+  }
+
+  .itemDescription .productDetailsDescription {
+    display: flex;
+    border-top: 1.5px solid orange;
+    
+    .price {
+      width: 50%;
+      p {
+        font-size: 150%;
+        margin: 10% 0 0 10%;
+      }
+      span {
+        color: orangered;
+      }
+    }
+
+    .buy {
+      width: 60%;
+      display: flex;
+
+      .orderProductNow {
+        width: 50%;
+        margin-left: 5%;
+        margin-top: 5%;
+        height: 70%;
+        border-radius: 20px;
+        color: white;
+        background-color: black;
+      }
+
+      .addProductToChart {
+        width: 20%;
+        font-size: 185%;
+        margin-left: 10%;
+        margin-top: 5%;
+        color: black;
+      }
+    }
+  }
+
+  .orderProductNow:hover,
+  .addProductToChart:hover {
+    cursor: pointer;
+  }
+}
+
+.Product:hover {
+  cursor: pointer;
+  transform: perspective(800px) rotateX(-7deg) rotateY(0) translateZ(50px);
+  box-shadow: 10px 10px 10px rgb(78, 76, 76), -10px 0px 10px rgb(78, 76, 76);
+}
+
+.Product:hover .available,
+.Product:hover .unavailable {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Responsive styles */
+
+/* Tablets and medium screens */
+@media (max-width: 1024px) {
+
+  .cards-container {
+    margin-top: 7%;
+  }
+
+  .Product {
+    width: 30%; /* Adjust width for tablets */
+    margin: 3% 1.5%; /* Adjust margins for spacing */
+
+    .itemDescription .productDetailsDescription {
+      display: flex;
+      border-top: 1.5px solid orange;
+      
+      .price {
+        width: 50%;
+        p {
+          font-size: 150%;
+          margin: 10% 0 0 10%;
+        }
+        span {
+          color: orangered;
+        }
+      }
+  
+      .buy {
+        width: 60%;
+        display: flex;
+  
+        .orderProductNow {
+          width: 50%;
+          font-size: 70%;
+          margin-left: 5%;
+          margin-top: 5%;
+          height: 70%;
+          border-radius: 20px;
+          color: white;
+          background-color: black;
+        }
+  
+        .addProductToChart {
+          width: 20%;
+          font-size: 185%;
+          margin-left: 10%;
+          margin-top: 5%;
+          color: black;
+        }
+      }
+    }
+
+
+  }
+}
+
+/* Small tablets and large phones */
+@media (max-width: 768px) {
+
+  .cards-container {
+    margin-top: 17%;
+  }
+
+  .Product {
+    width: 250px; /* Adjust width for smaller tablets */
+    margin: 3% 2%; /* Adjust margins for spacing */
+    .itemDescription .productDetailsDescription {
+      display: flex;
+      border-top: 1.5px solid orange;
+      
+      .price {
+        width: 50%;
+        p {
+          font-size: 120%;
+          margin: 10% 0 0 10%;
+        }
+        span {
+          color: orangered;
+        }
+      }
+  
+      .buy {
+        width: 60%;
+        display: flex;
+  
+        .orderProductNow {
+          width: 50%;
+          font-size: 70%;
+          margin-left: 5%;
+          margin-top: 5%;
+          height: 70%;
+          border-radius: 20px;
+          color: white;
+          background-color: black;
+        }
+  
+        .addProductToChart {
+          width: 20%;
+          margin-left: 10%;
+          font-size: 185%;
+          margin-top: 5%;
+          color: black;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width:620px) {
+
+  .Product {
+    width: 46%;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  .Product {
+    width: 250px; /* One card per line for mobile screens */
+   // height: 35vh;
+    margin: 4% 2.5%; /* Add space between cards */
+
+    .itemDescription .productDetailsDescription {
+      display: flex;
+      border-top: 1.5px solid orange;
+      
+      .price {
+        width: 40%;
+        p {
+          font-size: 110%;
+          margin: 10% 0 0 10%;
+        }
+        span {
+          color: orangered;
+        }
+      }
+  
+      .buy {
+        width: 60%;
+        display: flex;
+  
+        .orderProductNow {
+          width: 50%;
+          font-size: 70%;
+          margin-left: 5%;
+          margin-top: 5%;
+          height: 70%;
+          border-radius: 20px;
+          color: white;
+          background-color: black;
+        }
+  
+        .addProductToChart {
+          width: 40px;
+         // background-color: skyblue;
+          font-size: 185%;
+          margin-left: 10%;
+          margin-top: 5%;
+          color: black;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .Product {
+    width: 70%; /* One card per line for mobile screens */
+   // height: 35vh;
+    margin: 4% 2.5%; /* Add space between cards */
+
+    .itemDescription .productDetailsDescription {
+      display: flex;
+      border-top: 1.5px solid orange;
+      
+      .price {
+        width: 40%;
+        p {
+          font-size: 110%;
+          margin: 10% 0 0 10%;
+        }
+        span {
+          color: orangered;
+        }
+      }
+  
+      .buy {
+        width: 60%;
+        display: flex;
+  
+        .orderProductNow {
+          width: 50%;
+          font-size: 70%;
+          margin-left: 5%;
+          margin-top: 5%;
+          height: 70%;
+          border-radius: 20px;
+          color: white;
+          background-color: black;
+        }
+  
+        .addProductToChart {
+          width: 40px;
+         // background-color: skyblue;
+          font-size: 185%;
+          margin-left: 10%;
+          margin-top: 5%;
+          color: black;
+        }
+      }
+    }
+  }
+}
+
+// order product Card 
+
+.orderProductCard {
+  width: 30%;
+  height: 75%;
+  top: 10%;
+  left: 35%;
+  position: absolute;
+  background-color: white;
+  border: 2px solid orange;
+  border-radius: 15px;
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: -1; /* Ensure z-index is high enough */
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  transform: perspective(800px) rotateX(0) rotateY(0);
+  display: inline-block;
+  overflow: hidden;
+  box-shadow: 0 15px 15px gray;
+}
+
+@media(max-width:1200px) {
+  .orderProductCard {
+   width: 40%;
+   height: 75%;
+   top: 15%;
+   left: 25%;
+  }
+}
+
+@media(max-width:700px) {
+   .orderProductCard {
+    width: 70%;
+    height: 75%;
+    top: 15%;
+    left: 15%;
+   }
+}
+@media(max-width:400px) {
+  .orderProductCard {
+   width: 80%;
+   height: 85%;
+   top: 8%;
+   left: 10%;
+  }
+}
+
+
+
+.orderProductCard.visible {
+  z-index: 99;
+  opacity: 1;
+  transform: scale(1); /* Scale it to full size */
+}
+
+.orderProductCard.hidden {
+  z-index: -1;
+  opacity: 0;
+  transform: scale(0.5); /* Scale it down */
+}
+
+
+.oldOrdersCard {
+  width: 90%;
+  height: 80%;
+  top: 5%;
+  left: 5%;
+  position: absolute;
+  background-color: white;
+  border: 2px solid orange;
+  border-radius: 15px;
+  overflow-y: auto;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: -1; /* Ensure z-index is high enough */
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  transform: perspective(800px) rotateX(0) rotateY(0);
+  display: inline-block;
+  box-shadow: 0 15px 15px gray;
+}
+
+.oldOrdersCard.visible {
+  z-index: 199;
+  opacity: 1;
+  transform: scale(1); /* Scale it to full size */
+}
+
+.oldOrdersCard.hidden {
+  z-index: -1;
+  opacity: 0;
+  transform: scale(0.5); /* Scale it down */
+}
+
+.oldOrdersTitle {
+
+  font-size: xx-large;
+  font-weight: bold;
+  text-align: center;
+}
+.closeButton {
+  color: orangered;
+  margin-left: 96%;
+}
+
+.flavours {
+  display: inline-block;
+  margin-top: 5%;
+  width: fit-content;
+//  background-color: pink;
+}
+
+.yourOptions {
+  display: inline-block;
+  margin-left: 2.5%;
+}
+
+.addFlavour {
+  position: absolute;
+  color: orangered;
+  margin-top: 5%;
+  margin-left: 3%;
+}
+
+.orderProduct {
+
+  .error {
+    text-align: center;
+    width: 200px;
+    height: 10%;
+     margin-left: 10%;
+     margin-top: 2%;
+    color: rgb(255, 68, 0);
+    border-color:red ;
+    display: inline-block;
+    overflow: hidden;
+    box-shadow: 0 15px 15px gray;
+   }
+
+   .orderedProductPhoto {
+    width: 70%;
+    height: 35vh;
+    margin-left: 15%;
+    text-align: center;
+    img {
+      width: 80%;
+      height: 90%;
+      border-radius: 20px;
+    }
+  }
+
+  .orderOwnerFullName {
+ //   background-color: skyblue;
+    
+    margin-top: 20px;
+    label {
+      display: block;
+      text-align: center;
+      margin-left: 8px;
+    }
+    
+    input {
+      display: block;
+      width: 60%; /* Adjusted for responsiveness */
+      margin: 5px auto;
+      padding: 0.5rem;
+      border: 1px solid orange;
+      border-radius: 15px;
+
+      &:focus {
+        border-color: orangered;
+      }
+    }
+    .quantityError {
+      color:  red;
+      text-align: center;
+    }
+
+  }
+  
+
+}
+
+
+.choseFlavour {
+  width: fit-content;
+//  background-color: orchid;
+  height: fit-content;
+  border-radius: 5px;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.deleteFlavour {
+  margin-left: 10%;
+  color: orangered;
+}
+.flavourName {
+  display: block;
+  width: fit-content;
+  border-radius: 10px;
+  background-color: rgb(255, 106, 0);
+}
+.quantityPrice {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+}
+
+.orderQuantity{
+  width: 50%;
+
+label {
+  margin-left: 2%;
+}
+
+.orderQuantityNumber {
+  width: 70%;
+  margin-left: 2%;
+  height: 20px;
+}
+
+.quantityError {
+  color: red;
+}
+
+}
+
+.orderPrice {
+
+  margin-left: 10%;
+  label {
+    margin-top: 50%;
+    font-size: larger;
+  }
+  span {
+    color: orangered;
+  }
+}
+
+
+.orderOneNow {
+  width: 20%;
+  height: 30px;
+  background-color: rgba(255, 68, 0, 0.741);
+  color: black;
+  margin: 5% auto; /* This centers the button horizontally */
+  border-radius: 20px;
+  display: block; /* Ensures that the margin auto works */
+}
+
+.orderOneNow:hover {
+  background-color: orangered;
+}
+
+
+.orderProducts {
+  width: 20%;
+  height: 30px;
+  background-color: rgba(255, 68, 0, 0.741);
+  color: black;
+  margin: 5% auto; /* This centers the button horizontally */
+  border-radius: 20px;
+  display: block; /* Ensures that the margin auto works */
+}
+
+.orderProducts:hover {
+  background-color: orangered;
+}
+
+
+
+
+.cancelButton {
+  border-radius: 20px;
+}
+
+
+/*****************************************************************/
+/*****************************************************************/
+/*****************************************************************/
+/// chart Card 
+
+.chartCard {
+  width: 90%;
+  height: 80%;
+  top: 5%;
+  left: 5%;
+  position: absolute;
+  background-color: white;
+  border: 2px solid orange;
+  border-radius: 15px;
+  overflow-y: auto;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: -1; /* Ensure z-index is high enough */
+  display: inline-block;
+  box-shadow: 0 15px 15px gray;
+}
+
+.chartCard.visible {
+  z-index: 199;
+  opacity: 1;
+  transform: scale(1); /* Scale it to full size */
+}
+
+.chartCard.hidden {
+  z-index: -1;
+  opacity: 0;
+  transform: scale(0.5); /* Scale it down */
+}
+
+/* Responsive Styles */
+
+/* Tablets and medium screens (1024px and below) */
+@media (max-width: 1024px) {
+  .chartCard {
+    width: 80%;
+    height: 75%;
+    left: 10%; /* Center horizontally */
+    top: 10%; /* Center vertically */
+  }
+}
+
+/* Small tablets and large phones (768px and below) */
+@media (max-width: 768px) {
+  .chartCard {
+    width: 85%;
+    height: 70%;
+    left: 7.5%; /* Center horizontally */
+    top: 15%; /* Adjust vertical spacing */
+  }
+}
+
+/* Mobile phones (480px and below) */
+@media (max-width: 480px) {
+  .chartCard {
+    width: 95%;
+    height: 65%;
+    left: 2.5%; /* Center horizontally */
+    top: 20%; /* Adjust vertical spacing */
+    border-radius: 10px; /* Reduce border radius for smaller screens */
+  }
+}
+
+/* Extra-small phones (400px and below) */
+@media (max-width: 400px) {
+  .chartCard {
+    width: 95%;
+    height: 60%;
+    left: 2.5%; /* Center horizontally */
+    top: 25%; /* Adjust vertical spacing */
+    border-radius: 8px; /* Further reduce border radius */
+  }
+}
+
+
+
+.chartCloseButton {
+  margin-top: 0.5%;
+ float: right;
+  margin-right: 3%;
+  color: orangered;
+  font-size: larger;
+}
+
+
+.chartProductsTable {
+  width: 90%;
+  border-collapse: collapse;
+
+
+  .chartProductsTableHeading {
+    color: orange;
+  }
+
+
+  .tableDataProductPhoto {
+    width: 300px;
+    height: 290px;  @media (max-width:830px) {
+      .tableDataProductPhoto {
+        width: 300px;
+        height: 290px;
+        background-color: aquamarine;
+    
+        img {
+          width: 100px;
+          height: 70%;
+          border-radius: 7px;
+          float: right;
+        //  margin-left: 20%;
+        }
+    
+    
+      }
+    }
+
+    img {
+      width: 50%;
+      height: 90%;
+      border-radius: 7px;
+      margin-left: 20%;
+    }
+
+
+  }
+
+  @media (max-width:1000px) {
+    .tableDataProductPhoto {
+  
+      img {
+        width: 120px;
+        height: 90%;
+        border-radius: 7px;
+      //  margin-left: 20%;
+      }
+  
+  
+    }
+
+  }
+
+  @media (max-width:830px) {
+    .tableDataProductPhoto {  
+      img {
+        width: 100px;
+        height: 70%;
+        border-radius: 7px;
+        float: right;
+      //  margin-left: 20%;
+      }
+  
+  
+    }
+  }
+
+
+  @media (max-width:670px) {
+    .tableDataProductPhoto {
+     
+      img {
+        width: 90px;
+        height: 55%;
+        border-radius: 7px;
+        float: right;
+      //  margin-left: 20%;
+      }
+    }
+  }
+
+  @media (max-width:480px) {
+    .tableDataProductPhoto {
+      
+      img {
+        width: 80px;
+        height: 45%;
+        border-radius: 7px;
+        float: right;
+      //  margin-left: 20%;
+      }
+    }
+  }
+
+  .tableDataFlavoursChartProducts {
+    width: 20%;
+  //  background-color: aquamarine;
+    text-align: center;
+
+    @media(max-width: 768px) {
+      font-size: 15px;
+      padding: 10px 10px;
+    }
+    @media(max-width: 480px) {
+      font-size: 13px;
+      padding: 10px 10px;
+    }
+  }
+
+
+  .tableDataChartProducts,
+  .tableHeadChartProducts {
+    text-align: center;
+    
+    padding: 10px 10px;
+    @media(max-width: 768px) {
+      font-size: 15px;
+      padding: 10px 10px;
+    }
+    @media(max-width: 480px) {
+      font-size: 13px;
+      padding: 10px 10px;
+    }
+
+  }
+
+
+  .chartProductsTableHeading {
+    text-align: left;
+    font-size: 17px;
+   // background-color: rgb(237, 154, 9);
+
+    .tableHeadChartProducts {
+      &::last-child {
+        text-align: center;
+      }
+    }
+  }
+
+
+}
+
+.DeleteChartButton{
+  color: orangered;
+}
+
+
+.chartInformation {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+
+  .numberOfProducts,
+  .totalPrice {
+    width: 48%; /* Slightly less than half for spacing */
+    text-align: center;
+    display: flex;
+  }
+
+  .numberOfProducts p,
+  .totalPrice p {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0.5rem 0;
+  }
+
+  .numberOfProducts h2,
+  .totalPrice h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  span {
+    font-size: 1rem;
+    color: orangered;
+  }
+
+  .chartOrderButton {
+    width: 120px;
+    height: 40px;
+    background-color: orange;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin: 0.5rem auto;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .chartOrderButton:hover {
+    background-color: rgb(255, 98, 0);
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    height: auto;
+    text-align: center;
+
+    .numberOfProducts,
+    .totalPrice {
+      width: 100%;
+      flex-direction: column;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .chartOrderButton {
+      width: 100%; /* Make the button full width */
+      padding: 1rem;
+    }
+
+    .numberOfProducts p,
+    .totalPrice p {
+      font-size: 1.1rem;
+    }
+
+    .numberOfProducts h2,
+    .totalPrice h2 {
+      font-size: 1.2rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .numberOfProducts p,
+    .totalPrice p {
+      font-size: 0.9rem;
+    }
+
+    .numberOfProducts h2,
+    .totalPrice h2 {
+      font-size: 1.1rem;
+    }
+
+    .chartOrderButton {
+      width: 100%;
+      font-size: 1rem;
+    }
+  }
+}
+
+.chartInformation .customerInformation {
+  width: 100%;
+  margin-top: 0.5rem;
+
+}
+
+.customerName{
+  width: 38%; 
+  float: left;
+ .quantityError {
+  font-size: x-large;
+  font-weight: bolder;
+  color: red;
+  text-align: center;
+ }
+}
+.customerPhone {
+  width: 38%; /* Make the inputs occupy half the width */
+  margin-right: 5%;
+  float: right;
+ .quantityError {
+  font-size: x-large;
+  font-weight: bolder;
+  color: red;
+  text-align: center;
+ }
+}
+@media(min-width:1025px){
+  .customerName {
+    margin-left: 2%;
+  }
+  .customerPhone {
+    margin-left: 15%;
+  }
+  
+}
+
+.customerName label, .customerPhone label {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.customerName input, .customerPhone input {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid orange;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.customerName input:focus, .customerPhone input:focus {
+  border: 2px solid darkorange;
+  outline: none;
+}
+
+/* Responsive Styles */
+
+/* Tablets and medium screens (1024px and below) */
+@media (max-width: 1024px) {
+  .chartInformation .customerInformation {
+    flex-direction: column;
+    align-items: center;
+  
+  }
+
+  .customerName, .customerPhone {
+    width: 90%; /* Make inputs full width for smaller screens */
+    margin-bottom: 1rem;
+    margin-left: 5%;
+  }
+}
+
+/* Small tablets and large phones (768px and below) */
+@media (max-width: 768px) {
+  .customerName, .customerPhone {
+    width: 90%; /* Full width for smaller screens */
+  }
+}
+
+/* Mobile phones (480px and below) */
+@media (max-width: 480px) {
+  .customerName {
+    width: 95%; /* Full width for small phones */
+    margin-left: 2.5%;
+  }
+  .customerPhone {
+    width: 95%; /* Full width for small phones */
+    margin-right: 2.5%;
+  }
+
+  .customerName input, .customerPhone input {
+    font-size: 0.9rem; /* Reduce font size for very small screens */
+  }
+}
+
+
+
+
+.fatherEmptychart{
+ width: 50%;
+ height: 20vh;
+ text-align: center;
+ margin-top: 3%;
+ margin-left: 25%;
+  .chartEmptyIcon {
+    margin: 5% 0 0 0 ;
+    font-size: 100%;
+    color: orangered;  
+  }
+  
+  .chartIsEmpty {
+    font-size: 200%;
+    margin-left: 0%;
+    margin-top: 2.5%; 
+  }
+
+  @media(max-width: 1020px) {
+
+    .chartIsEmpty {
+      font-size: 150%;
+    }
+  }
+  @media(max-width: 690px) {
+
+    .chartIsEmpty {
+      font-size: 100%;
+    }
+  }
+  
+}
+
+
+
+
+.footer {
+  width: 100%;
+  height: 10vh;
+}
+
+.alertOrderTitle {
+
+  color: rgb(11, 223, 8);
+}
+
+.alertDeleteProductFromChart {
+  color: red;
+}
+
+.alertOrderIcon {
+  color: red;
+}
+
+.alertOrderCancelButton {
+  background-color: rgb(197, 31, 31) !important;
+  border-radius: 20px;
+}
+
+.alertOrderConfirmButton {
+  background-color: rgb(18, 170, 15);
+  border-radius: 20px;
+}
+
+.alertOrderConfirmButton2 {
+  background-color: gold;
+}
+
+.successHighlight {
+  color: green;
+}
+
+.warningHighlight {
+  color: red;
+}
+
+
+.custom-table-row {
+  border-bottom: 2px solid  white; /* Change color as needed */
+  height: 150px;
+
+}
+
+.custom-table-head-row {
+  border-bottom: 2px solid white; /* Change color as needed */
+}
+
+.insideTable {
+  th {
+    border-bottom: none;
+  }
+
+}
+
+.haveNoOrders {
+  width: 25%;
+  margin: 15% 0 0 37%;
+}

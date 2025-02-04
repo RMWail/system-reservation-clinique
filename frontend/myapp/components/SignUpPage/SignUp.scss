@@ -1,0 +1,234 @@
+.Father {
+  width: 40%; /* العرض الافتراضي للشاشات الكبيرة */
+  height: fit-content;
+  border-radius: 7px;
+  margin: 8% auto; /* التوسيط الأفقي */
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 20px orange; /* إضافة تأثير الظل */
+  transition: transform 0.6s ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+    transform: translateX(0px) translateY(-25px);
+  }
+}
+
+.input-group {
+  margin-top: 20px;
+
+  label {
+    display: block; /* لضمان ظهور النص بشكل متساوٍ */
+    text-align: center; /* توسيط النص */
+    color: orange;
+    margin: 0 auto 10px auto; /* توسيط النص والمسافات */
+  }
+
+  input {
+    display: block;
+    width: 80%; /* العرض النسبي للتجاوب */
+    margin: 5px auto; /* توسيط الحقول */
+    padding: 1rem;
+    border: 1px solid orange;
+    border-radius: 15px;
+
+    &:focus {
+      border-color: orangered;
+    }
+  }
+
+  .error {
+    text-align: center;
+    color: red;
+    font-size: 0.9rem;
+  }
+
+  &.error input {
+    border-color: red;
+  }
+
+  &.success input {
+    border-color: #57cf66;
+  }
+}
+
+.confirmButton {
+  display: block;
+  width: 50%; /* العرض النسبي */
+  height: 40px;
+  margin: 20px auto; /* التوسيط */
+  text-align: center;
+  background-color: rgb(247, 191, 88);
+  border: 1px solid black;
+  border-radius: 15px;
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+    background-color: orange;
+  }
+}
+
+/* استعلامات الوسائط للشاشات المختلفة */
+
+/* للشاشات المتوسطة (الأجهزة اللوحية) */
+@media (max-width: 768px) {
+  .Father {
+    width: 60%; /* ضبط العرض */
+    margin: 10% auto; /* توسيط أفضل */
+  }
+
+  .input-group input {
+    width: 90%; /* زيادة عرض الحقول */
+  }
+
+  .confirmButton {
+    width: 70%; /* تكبير الزر */
+  }
+}
+
+/* للشاشات الصغيرة (الهواتف) */
+@media (max-width: 480px) {
+  .Father {
+    width: 90%; /* العرض الكامل */
+    margin: 15% auto;
+  }
+
+  .input-group label {
+    font-size: 0.9rem; /* تصغير النص قليلاً */
+  }
+
+  .input-group input {
+    width: 95%; /* تكبير عرض الحقول */
+  }
+
+  .confirmButton {
+    width: 80%; /* تكبير عرض الزر */
+    font-size: 0.9rem; /* تصغير النص قليلاً */
+  }
+}
+.Father {
+  width: 40%; /* العرض الافتراضي للشاشات الكبيرة */
+  height: fit-content;
+  border-radius: 7px;
+  margin: 8% auto; /* التوسيط الأفقي */
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 20px orange; /* إضافة تأثير الظل */
+  transition: transform 0.6s ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+    transform: translateX(0px) translateY(-25px);
+  }
+}
+
+.input-group {
+  margin-top: 20px;
+
+  label {
+    display: block; /* لضمان ظهور النص بشكل متساوٍ */
+  //  text-align: center; /* توسيط النص */
+    color: orange;
+    margin: 0 auto 10px auto; /* توسيط النص والمسافات */
+  }
+
+  input {
+    display: block;
+    width: 70%; /* العرض النسبي للتجاوب */
+    margin: 5px auto; /* توسيط الحقول */
+    padding: 1rem;
+    border: 1px solid orange;
+    border-radius: 15px;
+
+    &:focus {
+      border-color: orangered;
+    }
+  }
+
+  .error {
+    text-align: center;
+    color: red;
+    font-size: 0.9rem;
+  }
+
+  &.error input {
+    border-color: red;
+  }
+
+  &.success input {
+    border-color: #57cf66;
+  }
+}
+
+.confirmButton {
+  display: block;
+  width: 50%; /* العرض النسبي */
+  height: 40px;
+  margin: 20px auto; /* التوسيط */
+  text-align: center;
+  background-color: rgb(247, 191, 88);
+  border: 1px solid black;
+  border-radius: 15px;
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+    background-color: orange;
+  }
+}
+
+@media(max-width:1200px) {
+  .Father {
+    width: 60%; /* ضبط العرض */
+    margin: 130px auto; /* توسيط أفضل */
+  }
+
+  .input-group input {
+    width: 80%; /* زيادة عرض الحقول */
+  }
+
+  .confirmButton {
+    width: 70%; /* تكبير الزر */
+  }
+}
+
+/* استعلامات الوسائط للشاشات المختلفة */
+
+/* للشاشات المتوسطة (الأجهزة اللوحية) */
+
+@media (max-width: 768px) {
+  .Father {
+    width: 60%; /* ضبط العرض */
+    margin: 130px auto; /* توسيط أفضل */
+  }
+
+  .input-group input {
+    width: 90%; /* زيادة عرض الحقول */
+  }
+
+  .confirmButton {
+    width: 70%; /* تكبير الزر */
+  }
+}
+
+/* للشاشات الصغيرة (الهواتف) */
+@media (max-width: 480px) {
+  .Father {
+    width: 90%; /* العرض الكامل */
+    margin: 130px auto;
+  }
+
+  .input-group label {
+    font-size: 0.6rem; /* تصغير النص قليلاً */
+  }
+
+  .input-group input {
+    width: 95%; /* تكبير عرض الحقول */
+  }
+
+  .confirmButton {
+    width: 80%; /* تكبير عرض الزر */
+    font-size: 0.9rem; /* تصغير النص قليلاً */
+  }
+}

@@ -1,0 +1,136 @@
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 260px;
+  height: 100%;
+  background-color: #ffffff;
+  padding: 20px 14px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  z-index: 999;
+  transition: all 0.3s ease;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #2196f3;
+  }
+
+  &.sidebar-show {
+    @media(max-width: 768px) {
+      transform: translateX(0);
+    }
+  }
+
+  @media(max-width: 1200px) {
+    width: 60px;
+    padding: 20px 6px;
+  }
+
+  .sidebar-top {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    
+    .sidebar-brand-text {
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: #2196f3;
+      white-space: nowrap;
+        
+      @media(max-width: 1200px) {
+        display: none;
+      }
+    }
+  }
+
+  .sidebar-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .menu-item {
+    margin-bottom: 40px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .menu-link {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    border-radius: 10px;
+    color: #64748b;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+
+    &:hover {
+      background-color: #f8fafc;
+      color: #2196f3;
+
+      .menu-link-icon {
+        color: #2196f3;
+      }
+    }
+
+    &.active {
+      background-color: #2196f3;
+      color: #ffffff;
+
+      .menu-link-icon {
+        color: #ffffff;
+      }
+    }
+
+    @media(max-width: 1200px) {
+      padding: 12px;
+      justify-content: center;
+    }
+  }
+
+  .menu-link-icon {
+    display: flex;
+    align-items: center;
+    color: #64748b;
+    transition: all 0.3s ease;
+  }
+
+  .menu-link-text {
+    margin-left: 12px;
+    font-size: 1.1rem;
+    font-weight: 400;
+    
+    @media(max-width: 1200px) {
+      display: none;
+    }
+  }
+
+  .sidebar-menu2 {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+  }
+}

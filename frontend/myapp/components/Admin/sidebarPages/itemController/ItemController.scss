@@ -1,0 +1,238 @@
+
+
+
+
+.itemControllerFather {
+  width: 105%;
+  margin-top: -2%;
+  margin-left: -3%;
+  height: 980px;
+ // border: 3px dashed black; //rgb(255, 98, 0);
+  display: flex;
+}
+
+
+.addItemCard {
+  width: 40%;
+  height: 65%;
+  margin-top: 5%;
+  margin-left: 30%;
+  border-radius: 20px;
+  background-color: #fff;
+  box-shadow: 0 22px 24px rgba(2, 2, 2, 0.2);
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 0.2s, transform 0.4s;
+  z-index: 0;
+}
+
+.addItemCard.visible {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 1000;
+
+  .createDiv {
+    z-index: 0;
+  }
+}
+
+.addItemCard.hidden {
+  opacity: 0;
+  transform: scale(0.5);
+  z-index: 0;
+}
+
+
+.addItemCard .NameType {
+ width: 100%;
+ // background-color: pink;
+  display: flex;
+}
+
+
+.productName {
+  width: 50%;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.productType {
+
+ width: 30%;
+ margin-left: 2%;
+ margin-top: 20px;
+
+}
+
+.pricePhoto {
+  display: flex;
+}
+
+
+.productPrice {
+  width: 40%;
+  margin-top: 40px;
+  margin-left: 20px;
+}
+
+
+.productPhoto {
+  width: 40%;
+  margin-top: 40px;
+  margin-left: 20px;
+}
+
+
+.leftSide {
+  width: 50%;
+ // background-color: skyblue;
+  display: inline-block;
+  
+#flavoursAvailability {
+  margin-top: 2%;
+ margin-left: 20px;
+ color: gray;
+}
+
+#options {
+  width: 70%;
+  margin: 10px 0px 0px 20px;
+  border: 2px solid gray;
+  color: rgb(221, 120, 13);
+}
+
+}
+
+
+.rightSide {
+  width: 30%;
+  display: inline-block;
+ // background-color: pink;
+
+  #quantityLabel {
+    margin-bottom: 10px;
+   margin-left: 20px;
+   color: gray;
+  }
+
+  .productQuantity {
+    height: 4vh;
+    width: 70%;
+    margin-left: 20px;
+  }
+}
+
+
+.productDescription {
+  width: 83%;
+  height: 20vh;
+  margin-top: 4%;
+  margin-left: 20px;
+  border-radius: 8px;
+  display: block;
+}
+
+
+.productDescription:focus {
+  display: block;
+  border: 3px solid orange;
+}
+
+
+.createDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 15%; /* Default width */
+  height: auto;
+  padding: 20px;
+  margin-top: 17.5%; /* Adjust for default positioning */
+  margin-left: 32.5%; /* Adjust for default positioning */
+  border-radius: 20px;
+  border: 3px dashed gray;
+  transition: transform 0.3s ease-in-out;
+  box-shadow: 0 8px 10px rgba(36, 35, 35, 0.481);
+  z-index: 999;
+  text-align: center;
+}
+
+.createDiv:hover {
+  cursor: pointer;
+  transform: translateY(-10px); /* Slightly lift on hover */
+}
+
+.createIcon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: gray;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .createDiv {
+    width: 25%; /* Slightly larger for tablets */
+    margin-top: 35%; /* Adjust position for tablet */
+  }
+}
+
+@media (max-width: 768px) {
+  .createDiv {
+    width: 30%; /* Increase size for smaller screens */
+   // padding: 15px; /* Reduce padding */
+    margin-top: 45%; /* Adjust vertical spacing */
+  }
+
+  .createIcon h2 {
+    font-size: 1.2rem; /* Adjust text size for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .createDiv {
+    width: 50%; /* Full width for very small screens */
+    margin-top:55%; /* Increase spacing for mobile */
+  //  padding: 10px; /* Reduce padding further */
+  }
+
+  .createIcon h2 {
+    font-size: 1rem; /* Smaller text for mobile */
+  }
+}
+
+
+.createButton {
+  position: absolute;
+  padding: 10px;
+  border-radius: 15px;
+  width: 15%;
+  margin-top: 60px;
+  margin-left: 70%;
+  background-color: orange;
+}
+
+
+.createButton:hover {
+  cursor: pointer;
+  border: 1px solid orange;
+  background-color: rgb(255, 149, 0);
+  box-shadow: 0 5px 7px rgba(36, 35, 35, 0.481);
+}
+.cancelButton {
+  position: absolute;
+  padding: 10px;
+  width: 15%;
+  border-radius: 15px;
+  margin-top: 60px;
+  margin-left: 50%;
+  background-color: rgba(243, 9, 9, 0.827);
+}
+.cancelButton:hover {
+  cursor: pointer;
+  border: 1px solid red;
+  background-color: rgba(255, 0, 0, 0.755);
+  box-shadow: 0 5px 7px rgba(24, 24, 24, 0.481);
+}

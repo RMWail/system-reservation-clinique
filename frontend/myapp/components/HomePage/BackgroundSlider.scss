@@ -1,0 +1,349 @@
+.countainer-style {
+  height: 100vh;
+}
+
+.description {
+  width: 600px;
+  height: fit-content;
+  top: 30%;
+  left: 10%;
+  color: aliceblue;
+  position: absolute;
+  z-index: 999;
+
+  .h1 {
+    color: orangered;
+    font-size: 46px; 
+  //  color: rgb(247, 191, 88);
+}
+
+p {
+  font-size: 150%;
+  font-weight:bolder;
+}
+
+
+.ShopButton{
+  width: 100px;
+  height: 40px;
+  margin-right: 5%;
+  margin-top: 5%;
+  text-align: center;
+  background-color: rgb(247, 191, 88);
+ // color: red;
+  border: 1px solid black;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.ShopButton:hover{
+  transform: translateX(0px) translateY(-20px);
+  cursor: pointer;
+  background-color: orange;
+}
+
+
+.SignUpButton{
+  width: 100px;
+  height: 40px;
+ // margin-left: 43%;
+  text-align: center;
+  background-color: rgb(247, 191, 88);
+ // color: red;
+  border: 1px solid black;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.SignUpButton:hover{
+  cursor: pointer;
+  transform: translateX(0px) translateY(-20px);
+  background-color: orange;
+}
+
+}
+
+
+@media (max-width:1200px) {
+
+  .description {
+    width: 400px;
+    height: fit-content;
+    top: 30%;
+    left: 25%;
+ 
+    color: aliceblue;
+    position: absolute;
+    z-index: 999;
+  
+    h1 {
+      font-size: 46px; 
+      color: rgb(247, 191, 88);
+  }
+  
+  p {
+    font-size: 120%;
+    font-weight:bolder;
+  }
+  
+  
+  .ShopButton{
+    width: 100px;
+    height: 40px;
+    margin-right: 5%;
+    margin-top: 5%;
+    text-align: center;
+    background-color: rgb(247, 191, 88);
+   // color: red;
+    border: 1px solid black;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .ShopButton:hover{
+    transform: translateX(0px) translateY(-20px);
+    cursor: pointer;
+    background-color: orange;
+  }
+  
+  
+  .SignUpButton{
+    width: 100px;
+    height: 40px;
+   // margin-left: 43%;
+    text-align: center;
+    background-color: rgb(247, 191, 88);
+   // color: red;
+    border: 1px solid black;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .SignUpButton:hover{
+    cursor: pointer;
+    transform: translateX(0px) translateY(-20px);
+    background-color: orange;
+  }
+  
+  }
+
+  
+}
+
+
+
+
+// Login Button
+.loginButtonContainer{
+  position: absolute;
+  margin-top: 1.5%;
+  margin-left: 87%;
+  z-index: 999;
+
+  
+.loginButton1{
+  width: 100px;
+  height: 40px;
+  text-align: center;
+  background-color: rgb(233, 190, 109);
+ // color: red;
+  border: 1px solid black;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.loginButton1:hover {
+  cursor: pointer;
+  background-color: orange;
+  transform: translateX(0px) translateY(-8px);
+}
+}
+
+
+@media (max-width:1200px) {
+  
+  .loginButtonContainer{
+    // position: absolute;
+     margin-top: 2.5%;
+     margin-left: 90%;
+     z-index: 999;
+    
+   
+     
+   .loginButton1{
+     width: 100px;
+     height: 40px;
+     text-align: center;
+     background-color: rgb(233, 190, 109);
+    // color: red;
+     border: 1px solid black;
+     border-radius: 15px;
+     margin-bottom: 20px;
+     transition: transform 0.3s ease-in-out;
+   }
+   
+   .loginButton1:hover {
+     cursor: pointer;
+     background-color: orange;
+     transform: translateX(0px) translateY(-8px);
+   }
+   }
+}
+
+
+@media (max-width:1000px) {
+
+  .description {
+    width: 300px;
+    height: fit-content;
+    top: 30%;
+    left: 25%;
+
+    color: aliceblue;
+    position: absolute;
+    z-index: 999;
+  
+    .h1 {
+      font-size: 35px; 
+      color: orangered;
+  }
+  
+  p {
+    font-size: 100%;
+    font-weight:bolder;
+  }
+  
+  
+  }
+
+  .loginButtonContainer {
+    position: absolute;
+    margin-left: 85%;
+    z-index: 999;
+    
+  }
+}
+
+@media (max-width:650px) {
+
+  .description {
+    width: 300px;
+    height: fit-content;
+    top: 30%;
+    left: 25%;
+
+    color: aliceblue;
+    position: absolute;
+    z-index: 999;
+  
+    h1 {
+      font-size: 46px; 
+      color: rgb(247, 191, 88);
+  }
+  
+  p {
+    font-size: 100%;
+    font-weight:bolder;
+  }
+  
+  
+  }
+
+  .loginButtonContainer {
+    position: absolute;
+    margin-left: 75%;
+    z-index: 999;
+  }
+
+}
+
+@media(max-width:490px) {
+
+  .description {
+    width: 80%;
+    height: fit-content;
+    top: 30%;
+    left: 10%;
+   
+    color: aliceblue;
+    position: absolute;
+    z-index: 999;
+  
+    .h1 {
+      font-size: 30px; 
+      color: orangered;
+  }
+  
+  p {
+    font-size: 90%;
+    font-weight:bolder;
+  }
+  
+  
+  .ShopButton{
+    width: 80px;
+    height: 40px;
+    margin-right: 5%;
+    margin-top: 5%;
+    text-align: center;
+    background-color: rgb(247, 191, 88);
+   // color: red;
+    border: 1px solid black;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .ShopButton:hover{
+    transform: translateX(0px) translateY(-20px);
+    cursor: pointer;
+    background-color: orange;
+  }
+  
+  
+  .SignUpButton{
+    width: 80px;
+    height: 40px;
+   // margin-left: 43%;
+    text-align: center;
+    background-color: rgb(247, 191, 88);
+   // color: red;
+    border: 1px solid black;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .SignUpButton:hover{
+    cursor: pointer;
+    transform: translateX(0px) translateY(-20px);
+    background-color: orange;
+  }
+  
+  }
+  
+    .loginButtonContainer {
+      position: absolute;
+      margin-left: 60%;
+      z-index: 999;
+
+      .loginButton1{
+        width: 80px;
+        height: 40px;
+        text-align: center;
+        background-color: rgb(233, 190, 109);
+       // color: red;
+        border: 1px solid black;
+        border-radius: 15px;
+        margin-bottom: 20px;
+        transition: transform 0.3s ease-in-out;
+      }
+    }
+
+
+}

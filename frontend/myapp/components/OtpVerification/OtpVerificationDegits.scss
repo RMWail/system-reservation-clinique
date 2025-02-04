@@ -1,0 +1,147 @@
+
+.otp-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh; // Center vertically
+ // background: linear-gradient(135deg, #f0f4f8, #d9e9fc);
+  padding: 0px;
+
+  p {
+    font-size: 1.5rem;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .otp-area {
+    display: flex;
+    gap: 10px;
+
+    input {
+      width: 50px;
+      height: 50px;
+      font-size: 1.5rem;
+      text-align: center;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+
+      &:focus {
+        border-color: #e67e22;
+        outline: none;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+
+  .confirmOtpBtn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(135deg, #f39c12, #e67e22); /* Orange color family */
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+  
+    &:hover {
+      background: linear-gradient(135deg, #e67e22, #d35400); /* Darker orange shades */
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+  }
+  .errorMessageOtp {
+    color: red;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+}
+
+
+.accountVerified-swal-popup {
+  width: 400px; /* Customize the width of the popup */
+  padding: 30px;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+}
+
+.accountVerified-swal-popup .swal2-title {
+  font-size: 1.5rem;
+  color: #28a745;
+}
+
+.accountVerified-swal-popup .swal2-text {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.custom-swal-popup {
+  border-radius: 15px;
+  background: #fff7e6; /* Light orange background */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.custom-swal-title {
+  color: #d35400; /* Deep orange color for title */
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.custom-swal-confirm-button {
+  background: linear-gradient(135deg, #f39c12, #e67e22); /* Orange gradient */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.custom-swal-cancel-button {
+  background: #ccc; /* Neutral gray for cancel button */
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.custom-swal-confirm-button:hover {
+  background: linear-gradient(135deg, #e67e22, #d35400); /* Darker orange gradient */
+}
+
+.custom-swal-cancel-button:hover {
+  background: #bbb; /* Slightly darker gray on hover */
+}
