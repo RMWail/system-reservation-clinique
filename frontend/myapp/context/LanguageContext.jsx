@@ -1,31 +1,33 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
 const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
-  const [currentLanguage, setCurrentLanguage] = useState('en');
+  const [currentLanguage, setCurrentLanguage] = useState(() => {
+    // Get the language from sessionStorage or default to 'en'
+    return sessionStorage.getItem('language') || 'en';
+  });
+
+  const setLanguage = (lang) => {
+    setCurrentLanguage(lang);
+    sessionStorage.setItem('language', lang);
+  };
 
   const toggleLanguage = () => {
-    setCurrentLanguage(prevLang => {
-      switch (prevLang) {
-        case 'en':
-          return 'fr';
-        case 'fr':
-          return 'ar';
-        default:
-          return 'en';
-      }
-    });
+    const languages = ['en', 'fr', 'ar'];
+    const currentIndex = languages.indexOf(currentLanguage);
+    const nextIndex = (currentIndex + 1) % languages.length;
+    setLanguage(languages[nextIndex]);
   };
 
   // Update document direction based on language
-  React.useEffect(() => {
+  useEffect(() => {
     document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.lang = currentLanguage;
   }, [currentLanguage]);
 
   return (
-    <LanguageContext.Provider value={{ currentLanguage, toggleLanguage }}>
+    <LanguageContext.Provider value={{ currentLanguage, setLanguage, toggleLanguage }}>
       {children}
     </LanguageContext.Provider>
   );

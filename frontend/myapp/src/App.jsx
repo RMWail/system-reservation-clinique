@@ -1,25 +1,20 @@
 import { useEffect, useRef } from 'react'
-import SignUp from '../components/SignUpPage/SignUp'
 import Login from '../components/LoginPage/Login'
 import ForgetPassword from '../components/ForgetPassword/ForgetPassword'
 import ResetPassword from '../components/ResetPassword/ResetPassword'
 import HomePage from '../components/HomePage/HomePage'
 import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom'
 import BaseLayout from '../components/Admin/layout/BaseLayout'
-import AdminHome from '../components/Admin/sidebarPages/adminHomePage/AdminHome'
-import Appointments from '../components/Admin/sidebarPages/appointments/Appointments'
-import DoctorsManagement from '../components/Admin/sidebarPages/doctorsManagement/DoctorsManagement'
-import Statistics from '../components/Admin/sidebarPages/statistics/Statistics'
-import History from '../components/Admin/sidebarPages/history/History'
-import Settings from '../components/Admin/sidebarPages/settings/Settings'
-import OtpVerificationDegits from '../components/OtpVerification/OtpVerificationDegits'
-import DoctorsList from '../components/Doctors/DoctorsList'
-import AppointmentBooking from '../components/AppointmentBooking/AppointmentBooking'
-import CreateReservation from '../components/Admin/sidebarPages/createReservation/createReservation';
-import AdminHistory from '../components/Admin/sidebarPages/adminHistory/AdminHistory'
-import './App.scss'
+import RoutesManagement from '../components/Admin/sidebarPages/routes/RoutesManagement'
+import UniversitySection from '../components/Admin/sidebarPages/univSection/UniversitySection'
+import BusManagement from '../components/Admin/sidebarPages/buses/BusManagement'
+import BusStatistics from '../components/Admin/sidebarPages/busStatistics/Statistics'
+import StationsManagement from '../components/Admin/sidebarPages/stations/StationsManagement'
+import HomeDashboard from '../components/Admin/sidebarPages/home/HomeDashboard'
+import LanguageSettings from '../components/Admin/sidebarPages/language/LanguageSettings'
 import io from 'socket.io-client'
 import { LanguageProvider } from '../context/LanguageContext';
+import './App.scss'
 
 function App() {
   const socketRef = useRef('');
@@ -36,28 +31,35 @@ function App() {
     <LanguageProvider>
       <Router>
         <Routes>
-          <Route path='/' element={<HomePage/>} />
-          <Route path='/admin/login' element={<Login/>} />
-          <Route path='/forget-password' element={<ForgetPassword/>} />
-          <Route path='/reset-password/:email/:token' element={<ResetPassword/>} />
-          <Route path='/otp-verification/:email' element={<OtpVerificationDegits/>} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/forget-password" element={<ForgetPassword />} />
+          <Route path="/reset-password/:email/:token" element={<ResetPassword/>} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+ {/*
+           <Route path="/otp-verification/:email" element={<OtpVerificationDegits/>} />
+          <Route path="/otp-verification" element={<OtpVerificationDegits />} />
+ */}
           
-          {/* New clinic routes */}
-          <Route path='/doctors' element={<DoctorsList/>} />
-          <Route path='/AppointmentBooking' element={<AppointmentBooking/>} />
-          
-          {/* Admin routes */}
-          <Route element={<BaseLayout/>}>
-            <Route path='/admin' element={<Statistics/>} />
-            <Route path='/admin/doctors' element={<DoctorsManagement/>} />
-            <Route path='/admin/create-reservation' element={<CreateReservation/>} />
-            <Route path='/admin/appointments' element={<Appointments/>} />
-            {/* <Route path='/admin/statistics' element={<Statistics/>} /> */}
-            <Route path='/admin/history' element={<AdminHistory/>} />
-            <Route path='/admin/settings' element={<Settings/>} />
+          {/* Admin Routes */}
+          <Route path="/admin" element={<BaseLayout />}>
+            <Route index element={<HomeDashboard />} />
+            <Route path="routes" element={<RoutesManagement />} />
+            <Route path="univ-sections" element={<UniversitySection />} />
+            <Route path="buses" element={<BusManagement />} />
+            <Route path="stations" element={<StationsManagement />} />
+            <Route path="statistics" element={<BusStatistics />} />
+            <Route path="language" element={<LanguageSettings />} />
           </Route>
 
-          <Route path="*" element={<Navigate to="/" />} />
+          {/* Super Admin Routes 
+          <Route path="/super-admin" element={<BaseLayout2 />}>
+            <Route path="doctors" element={<DoctorsManagement />} />
+            <Route path="add-doctor" element={<AddNewDoctor />} />
+            <Route path="statistics" element={<DoctorsStatistics />} />
+          </Route>*/}
+
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Router>
     </LanguageProvider>

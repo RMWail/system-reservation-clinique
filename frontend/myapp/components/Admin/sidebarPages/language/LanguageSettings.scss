@@ -1,0 +1,60 @@
+.language-settings {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+
+  .language-settings-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+    gap: 1rem;
+
+    .header-icon {
+      font-size: 2rem;
+      color: #1a73e8;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      color: #2d3436;
+      margin: 0;
+    }
+  }
+
+  .language-options {
+    display: grid;
+    gap: 1rem;
+
+    .language-option {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 1.5rem;
+      background: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid #e1e1e1;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      &.active {
+        background: #1a73e8;
+        color: white;
+        border-color: #1a73e8;
+      }
+
+      .language-name {
+        font-size: 1.1rem;
+        font-weight: 500;
+      }
+
+      .active-indicator {
+        font-size: 1.2rem;
+      }
+    }
+  }
+}

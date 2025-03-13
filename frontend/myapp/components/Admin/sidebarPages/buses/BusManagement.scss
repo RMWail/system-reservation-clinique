@@ -1,0 +1,314 @@
+.bus-management {
+  padding: 2rem;
+
+  .bus-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    .search-filter {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+
+      .search-box {
+        position: relative;
+        
+        .search-icon {
+          position: absolute;
+          left: 12px;
+          top: 50%;
+          transform: translateY(-50%);
+          color: #666;
+        }
+
+        input {
+          padding: 0.75rem 1rem 0.75rem 2.5rem;
+          border: 1px solid #e0e0e0;
+          border-radius: 8px;
+          width: 300px;
+          font-size: 0.95rem;
+          transition: all 0.3s ease;
+
+          &:focus {
+            outline: none;
+            border-color: #2196f3;
+            box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
+          }
+        }
+      }
+
+      .availability-filter {
+        padding: 0.75rem 1rem;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        background: white;
+        font-size: 0.95rem;
+        min-width: 150px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:focus {
+          outline: none;
+          border-color: #2196f3;
+          box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
+        }
+      }
+    }
+
+    .add-bus-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: #1a73e8;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: #042ba0;
+        transform: translateY(-1px);
+      }
+
+      svg {
+        font-size: 1.25rem;
+      }
+    }
+  }
+
+  .buses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+
+    .bus-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+      }
+
+      .bus-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1.5rem;
+
+        .bus-info {
+          display: flex;
+          gap: 1rem;
+          align-items: center;
+
+          .bus-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(33, 150, 243, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            color: #2196f3;
+          }
+
+          .bus-details {
+            h3 {
+              margin: 0 0 0.5rem;
+              font-size: 1.25rem;
+              color: #1a237e;
+            }
+
+            .availability-badge {
+              padding: 0.35rem 0.75rem;
+              border-radius: 20px;
+              font-size: 0.85rem;
+              font-weight: 500;
+
+              &.available {
+                background: rgba(76, 175, 80, 0.1);
+                color: #4caf50;
+              }
+
+              &.unavailable {
+                background: rgba(244, 67, 54, 0.1);
+                color: #f44336;
+              }
+            }
+          }
+        }
+
+        .bus-actions {
+          display: flex;
+          gap: 0.5rem;
+
+          button {
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+
+            svg {
+              font-size: 1.25rem;
+            }
+
+            &.edit-btn {
+              color: #2196f3;
+
+              &:hover {
+                background: rgba(33, 150, 243, 0.1);
+              }
+            }
+
+            &.delete-btn {
+              color: #f44336;
+
+              &:hover {
+                background: rgba(244, 67, 54, 0.1);
+              }
+            }
+          }
+        }
+      }
+
+      .driver-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid #f0f0f0;
+
+        .driver-icon {
+          width: 40px;
+          height: 40px;
+          background: rgba(156, 39, 176, 0.1);
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.5rem;
+          color: #9c27b0;
+        }
+
+        .driver-details {
+          .driver-name {
+            margin: 0 0 0.25rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #333;
+          }
+
+          .driver-full-name {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #666;
+          }
+        }
+      }
+    }
+  }
+
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+
+    .modal {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      width: 90%;
+      max-width: 500px;
+      max-height: 70vh;
+      overflow-y: auto;
+
+      h2 {
+        margin: 0 0 1.5rem;
+        color: #1a237e;
+      }
+
+      .form-group {
+        margin-bottom: 0.5rem;
+
+        label {
+          display: block;
+          margin-bottom: 0.5rem;
+          font-weight: 500;
+          color: #333;
+        }
+
+        input,
+        select {
+          width: 100%;
+          padding: 0.75rem 1rem;
+          border: 1px solid #e0e0e0;
+          border-radius: 8px;
+          font-size: 0.95rem;
+          transition: all 0.3s ease;
+
+          &:focus {
+            outline: none;
+            border-color: #2196f3;
+            box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
+          }
+        }
+      }
+
+      .modal-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+        margin-top: 2rem;
+
+        button {
+          padding: 0.75rem 1.5rem;
+          border-radius: 8px;
+          font-size: 0.95rem;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.3s ease;
+
+          &.cancel-btn {
+            background: #f5f5f5;
+            border: none;
+            color: #666;
+
+            &:hover {
+              background: #e0e0e0;
+            }
+          }
+
+          &.submit-btn {
+            background: #2196f3;
+            border: none;
+            color: white;
+
+            &:hover {
+              background: #1976d2;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -12,9 +12,10 @@ function Login() {
   const navigate = useNavigate();
   const usernamePhoneRef = useRef(null);
   const passwordRef = useRef(null);
+  const [errors,setErrors] = useState({});
 
   const [formData,setFormData] = useState({
-    UsernamePhone: "",
+    Username: "",
     Password: "",
   })
 
@@ -52,6 +53,8 @@ function Login() {
      inputControl.classList.remove('error');
      inputControl.classList.add('success');
     }
+
+
 
     const sendOtpCode = async(email,username)=>{
       console.log('Email = '+email);
@@ -106,131 +109,150 @@ function Login() {
 
     const handleConfirm = async (e)=>{
           e.preventDefault();
-
+      const validationErrors = {};
   //    console.log(formData);
-     axios.post(`${apiUrl}/logincheck`,formData)
-     .then((response)=>{
-
-    
-     if(response.data.answer==='admin'){
-        sessionStorage.setItem('admin','yesAdmin');
-        navigate('/admin');
-     }
-     else if(response.data.answer===-1){
-        setError(usernamePhoneRef.current,"Wrong username or phone number or password");
-        setError(passwordRef.current,"");
-      }
-      else if(response.data.answer===0){
-        setError(usernamePhoneRef.current,"no account with this credentials");
-        setError(passwordRef.current,"");
-      }
-      else if(response.data.answer==='unverified'){
-        console.log(response.data.answer);
-        console.log(response.data.email);
-        const emailAccount = response.data.email;
-        const username = response.data.username;
-                Swal.fire({
-                  title: 'Account not verified!',
-                  text: 'Your account is not verified , Do you want to get a confirmation code in your Gmail',
-                  icon: 'warning',
-                  showCancelButton: true,
-                  confirmButtonText: 'Send',
-                  customClass: {
-                    popup: 'custom-swal-popup',
-                    title: 'custom-swal-title',
-                    cancelButton: 'custom-swal-cancel-button',
-                    confirmButton: 'custom-swal-confirm-button',
-                  },
-                  buttonsStyling: false, // To enable the custom class styling
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    console.log("Confirmed! Sending OTP...");
-                    sendOtpCode(emailAccount, username); // Ensure the function is properly invoked here
-                  } else {
-                    console.log("Cancelled or dismissed.");
-                  }
-                });
-      }
-      else if(response.data.answer===1) {
-        
-        sessionStorage.setItem('accountId',response.data.account);
-        setSuccess(usernamePhoneRef.current);
-        setSuccess(passwordRef.current);
-        navigate('/shop');
-      }
-
-     })
-     .catch((err)=>{
-      console.log(err);
-     })
+          if(formData.Username.trim()==''){
+           validationErrors.username = 'You have to put your username';
+           
+          }
+          if(formData.Password.trim()==''){
+            validationErrors.password = 'please put you password';
+          }
+         setErrors(validationErrors);
+          if(Object.keys(validationErrors).length==0){
+            axios.post(`${apiUrl}/logincheck`,formData)
+            .then((response)=>{
+       
+              if(response.data.answer===1) {
+               sessionStorage.setItem('token',response.data.token);
+               sessionStorage.setItem('accountId',response.data.account);
+               setSuccess(usernamePhoneRef.current);
+               setSuccess(passwordRef.current);
+               navigate('/admin');
+             }
+       
+            })
+            .catch((err)=>{
+             if(err.response) {
+               console.log(err.response);
+                      if(err.response.data.answer===-1){
+               setError(usernamePhoneRef.current,"Wrong credentials");
+            //   setError(passwordRef.current,"");
+             }
+             else if(err.response.data.answer===0){
+               setError(usernamePhoneRef.current,"no account with this credentials");
+             //  setError(passwordRef.current,"");
+             }
+        {/*
+               else if(response.data.answer==='unverified'){
+               console.log(response.data.answer);
+               console.log(response.data.email);
+               const emailAccount = response.data.email;
+               const username = response.data.username;
+                       Swal.fire({
+                         title: 'Account not verified!',
+                         text: 'Your account is not verified , Do you want to get a confirmation code in your Gmail',
+                         icon: 'warning',
+                         showCancelButton: true,
+                         confirmButtonText: 'Send',
+                         customClass: {
+                           popup: 'custom-swal-popup',
+                           title: 'custom-swal-title',
+                           cancelButton: 'custom-swal-cancel-button',
+                           confirmButton: 'custom-swal-confirm-button',
+                         },
+                         buttonsStyling: false, // To enable the custom class styling
+                       }).then((result) => {
+                         if (result.isConfirmed) {
+                           console.log("Confirmed! Sending OTP...");
+                           sendOtpCode(emailAccount, username); // Ensure the function is properly invoked here
+                         } else {
+                           console.log("Cancelled or dismissed.");
+                         }
+                       });
+             }
+         */}
+       
+             }
+             else {
+              Swal.fire({
+                icon:'error',
+                title:'Oops',
+                html:'<span style="color:red">Network error,Check operation has failed Please try again Later! </span>',
+                showConfirmButton:false,
+                timer:4000,
+              })
+             }
+                  
+            })
+          }
     }
 
 
 
  return (
     <div className="FatherLogin">
-      <div className="input-groupLogin">
-        <label htmlFor="UsernamePhone">Username or Phone number</label>
-        <input
-          type="text"
-          placeholder="mohamed_07 or phone....."
-          name="UsernamePhone"
-          ref={usernamePhoneRef}
-          value={formData.UsernamePhone}
-          onChange={handleChange}
-        />
-        <div className="error"></div>
-      </div>
-
-      <div className="input-groupLogin">
-        <label htmlFor="password">Password</label>
-        <div style={{ position: "relative", width: "100%" }}>
+      <form onSubmit={handleConfirm}>
+        <div className="input-groupLogin">
+          <label htmlFor="Username">Admin username </label>
           <input
-            type={showPassword ? "text" : "password"}
-            placeholder="password"
-            name="Password"
-            ref={passwordRef}
-            value={formData.Password}
+            type="text"
+            placeholder="mohamed_07 or phone....."
+            name="Username"
+            ref={usernamePhoneRef}
+            value={formData.Username}
             onChange={handleChange}
+            autoComplete='false'
           />
-          <span
-            onClick={togglePasswordVisibility}
-            style={{
-              position: "absolute",
-              right: "15%",
-              top: "50%",
-              transform: "translateY(-50%)",
-              cursor: "pointer",
-              color: showPassword ? "#2196f3" : "#888",
-            }}
-          >
-            {showPassword ? "🙈" : "👁️"}
-          </span>
-        </div>
-        <div className="error"></div>
-      </div>
-
-      <div className="btnsFather">
-        {/*
-          <div className="creatAccount">
-            <h4>Don't have an account</h4>
-            <a href="/signUp">Sign up</a>
+          <div className="error">
+            {errors.username && <span>{errors.username}</span>}
           </div>
-        */}
+        </div>
 
-        <div className="forgetPass">
-          <a className="forgetPass" href="/forget-password">
-            <strong>Forget Password</strong>
+        <div className="input-groupLogin">
+          <label htmlFor="password">Password</label>
+          <div className="password-input-wrapper">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="password"
+              name="Password"
+              ref={passwordRef}
+              value={formData.Password}
+              onChange={handleChange}
+            />
+            <span
+                  style={{
+                    position: "absolute",
+                    right: "10%",
+                    top: "45%",
+                    transform: "translateY(-50%)",
+                    cursor: "pointer",
+                    color: showPassword ? "#007BFF" : "#888",
+                  }}
+            
+              onClick={togglePasswordVisibility}
+            >
+              {showPassword ? "🙈" : "👁️"}
+            </span>
+          </div>
+          <div className="error">
+            {errors.password && <span>{errors.password}</span>}
+          </div>
+        </div>
+
+        <div className="forgot-password">
+          <a href="/forget-password">
+            Forgot Password?
           </a>
         </div>
 
         <div className="input-groupLogin">
-          <button className="confirmLogin" onClick={handleConfirm}>
-            Confirm
+          <button type="submit">
+            Login
           </button>
         </div>
-      </div>
+      </form>
     </div>
-  );
+  )
 }
 export default Login

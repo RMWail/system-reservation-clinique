@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaUserMd, FaCalendarAlt, FaClock, FaPhone, FaGlobe } from 'react-icons/fa';
+import { FaUniversity, FaBus, FaPhone, FaGlobe, FaClock, FaRoute, FaUserGraduate } from 'react-icons/fa';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../translations/translations';
 import './HomePage.scss';
-import { MdEmail } from 'react-icons/md';
+import { MdEmail, MdLocationOn } from 'react-icons/md';
 
 const HomePage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -13,16 +13,16 @@ const HomePage = () => {
 
   const backgroundSlides = [
     {
-      image: 'https://images.unsplash.com/photo-1504813184591-01572f98c85f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80',
-      title: t.backgroundSlides.expertCare,
+      image: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3',
+      title: t.home.slides.welcome,
     },
     {
-      image: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-      title: t.backgroundSlides.modernFacilities,
+      image: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?ixlib=rb-4.0.3',
+      title: t.home.slides.transport,
     },
     {
-      image: 'https://images.unsplash.com/photo-1666214280557-f1b5022eb634?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-      title: t.backgroundSlides.caringStaff,
+      image: 'https://images.unsplash.com/photo-1613896527026-f195d5c818ed?ixlib=rb-4.0.3',
+      title: t.home.slides.connect,
     }
   ];
 
@@ -52,12 +52,14 @@ const HomePage = () => {
       </div>
 
       <nav className="navbar">
-        <div className="nav-logo">MediCare</div>
+        <div className="nav-logo">
+          <FaBus className="icon" style={{ marginRight: '10px', color: '#1a73e8' }} />
+          {t.navLogo}
+        </div>
         <div className="nav-links">
           <a href="#about">{t.nav.about}</a>
           <a href="#services">{t.nav.services}</a>
           <a href="#contact">{t.nav.contact}</a>
-          <Link to="/doctors" className="book-btn">{t.nav.book}</Link>
           <button className="language-toggle" onClick={toggleLanguage}>
             <FaGlobe className="icon" />
             {currentLanguage.toUpperCase()}
@@ -66,79 +68,90 @@ const HomePage = () => {
       </nav>
 
       <section className="hero">
-        <h1>{t.hero.title}</h1>
-        <p>{t.hero.subtitle}</p>
-        <Link to="/doctors" className="cta-button">{t.hero.cta}</Link>
+        <h1>{t.home.hero.title}</h1>
+        <p>{t.home.hero.subtitle}</p>
       </section>
 
-      <section id="services" className="services">
-        <h2>{t.services.title}</h2>
-        <div className="service-cards">
-          <div className="service-card">
-            <FaUserMd className="icon" />
-            <h3>{t.services.expertDoctors.title}</h3>
-            <p>{t.services.expertDoctors.description}</p>
+      <section id="about" className="about">
+        <h2>{t.home.about.title}</h2>
+        <div className="about-content">
+          <div className="about-text">
+            <FaUniversity className="icon" style={{ fontSize: '2.5rem', color: '#1a73e8', marginBottom: '1rem' }} />
+            <h3>{t.home.about.mission}</h3>
+            <p>{t.home.about.description}</p>
           </div>
-          <div className="service-card">
-            <FaCalendarAlt className="icon" />
-            <h3>{t.services.easyScheduling.title}</h3>
-            <p>{t.services.easyScheduling.description}</p>
+          <div className="about-text">
+            <FaRoute className="icon" style={{ fontSize: '2.5rem', color: '#1a73e8', marginBottom: '1rem' }} />
+            <h3>{t.home.about.routes}</h3>
+            <p>{t.home.about.routesDesc}</p>
           </div>
-          <div className="service-card">
-            <FaClock className="icon" />
-            <h3>{t.services.service247.title}</h3>
-            <p>{t.services.service247.description}</p>
+          <div className="about-text">
+            <FaUserGraduate className="icon" style={{ fontSize: '2.5rem', color: '#1a73e8', marginBottom: '1rem' }} />
+            <h3>{t.home.about.students}</h3>
+            <p>{t.home.about.studentsDesc}</p>
           </div>
         </div>
       </section>
 
-      <section id="about" className="about">
-        <h2>{t.about.title}</h2>
+      <section id="services" className="about">
+        <h2>{t.home.services.title}</h2>
         <div className="about-content">
           <div className="about-text">
-            <p>{t.about.description}</p>
+            <FaBus className="icon" style={{ fontSize: '2.5rem', color: '#1a73e8', marginBottom: '1rem' }} />
+            <h3>{t.home.services.fleet}</h3>
+            <p>{t.home.services.fleetDesc}</p>
+          </div>
+          <div className="about-text">
+            <FaClock className="icon" style={{ fontSize: '2.5rem', color: '#1a73e8', marginBottom: '1rem' }} />
+            <h3>{t.home.services.schedule}</h3>
+            <p>{t.home.services.scheduleDesc}</p>
           </div>
         </div>
       </section>
 
       <section id="contact" className="contact">
-        <h2>{t.contact.title}</h2>
+        <h2>{t.home.contact.title}</h2>
         <div className="contact-content">
           <div className="contact-info">
             <FaPhone className="icon" />
-            <h3>{t.contact.emergency}</h3>
-            <p>+1 (555) 123-4567</p>
+            <h3>{t.home.contact.office}</h3>
+            <p>+213 XX XX XX XX</p>
           </div>
        
           <div className="contact-info">
             <MdEmail className="icon" />
-            <h3>{t.contact.emergency}</h3>
-            <p>raziclinique@gmail.com</p>
+            <h3>{t.home.contact.email}</h3>
+            <p>transport@univ-biskra.dz</p>
           </div>
-          
+
+          <div className="contact-info">
+            <MdLocationOn className="icon" />
+            <h3>{t.home.contact.location}</h3>
+            <p>{t.home.contact.address}</p>
+          </div>
         </div>
       </section>
 
       <footer className="footer">
         <div className="footer-content">
           <div className="footer-section">
-            <h3>MediCare</h3>
-            <p>{t.footer.slogan}</p>
+            <h3>{t.home.footer.about}</h3>
+            <p>{t.home.footer.description}</p>
           </div>
           <div className="footer-section">
-            <h3>{t.footer.quickLinks}</h3>
+            <h3>{t.home.footer.quickLinks}</h3>
             <a href="#about">{t.nav.about}</a>
             <a href="#services">{t.nav.services}</a>
             <a href="#contact">{t.nav.contact}</a>
           </div>
           <div className="footer-section">
-            <h3>{t.footer.contactInfo}</h3>
-            <p>123 Medical Center Dr.</p>
-            <p>contact@medicare.com</p>
+            <h3>{t.home.footer.contact}</h3>
+            <p>{t.home.contact.address}</p>
+            <p>transport@univ-biskra.dz</p>
           </div>
         </div>
         <div className="footer-bottom">
-          <p>{t.footer.rights}</p>
+          <p> 2025 {t.home.footer.copyright}</p>
         </div>
       </footer>
     </div>

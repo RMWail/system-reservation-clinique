@@ -1,9 +1,10 @@
 import express from 'express';
 import adminRouting from './routes/adminRouting.js';
 import loginSignUpRouting from './routes/loginAndSignUpRouting.js'
-import patientRouting from './routes/patientRouting.js';
 import forgetAndResetPassRouting from './routes/forgetAndResetPass.js';
 import accountVerificationRouting from './routes/accountVerification.js';
+import busManagementRouting from './routes/busManagementRouting.js';
+import stationManagementRouting from './routes/stationManagementRouting.js';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import http from 'http';
@@ -13,6 +14,11 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { Server as socketio } from 'socket.io';
 import dotenv from 'dotenv';
+
+
+// Path to the .ttf or .otf font file
+  // This will output the Base64 string
+
 
 dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
@@ -55,9 +61,11 @@ app.use((req,res,next)=>{
 
 app.use('/',adminRouting); // The routing of the admin 
 app.use('/',loginSignUpRouting);  // The routing of login and sign up operations
-app.use('/',patientRouting);  // The routing of the customer operations
 app.use('/',forgetAndResetPassRouting); // The routing of forget and reset password for customer
 app.use('/',accountVerificationRouting); // The routing of customer account otp code verification
+app.use('/',busManagementRouting);
+app.use('/',stationManagementRouting);
+
 /*
 if(isMainThread){
 

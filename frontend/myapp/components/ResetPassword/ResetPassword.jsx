@@ -1,9 +1,9 @@
-import React, {useRef, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import { useNavigate,useParams } from 'react-router-dom'
 import { encryptWithFixedIV } from '../../../../backend/encryptionMethods/encryptionDecryptionMethods';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-
+import './ResetPassword.scss'
 
 function ResetPassword() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -13,6 +13,12 @@ function ResetPassword() {
   const [password,setPassword] = useState('');
   const [confirmPass,setConfirmPass] = useState('');
   const navigate = useNavigate('');
+
+  useEffect(()=>{
+    if(!email || !token){
+      navigate('/login')
+    }
+  },[])
 
     const [showPassword, setShowPassword] = useState(false);
   
@@ -26,23 +32,6 @@ function ResetPassword() {
       setConfirmShowPassword((prevState) => !prevState);
     };
   
-  
-  
-
-  /*
-  const [showPassword, setShowPassword] = useState({
-    newPassword: false,
-    confirmPassword: false,
-  });
-
-  const togglePasswordVisibility = (field) => {
-    setShowPassword((prev) => ({
-      ...prev,
-      [field]: !prev[field],
-    }));
-  };
-*/
-
   const setError=(element,message)=>{
     const inputControl = element.parentElement;
     const errorDisplay = inputControl.querySelector('.error');
@@ -62,16 +51,26 @@ function ResetPassword() {
      inputControl.classList.add('success');
     }
 
-    const isValidPassword = (test)=>{
-      if(test.length<6)
-        return -1;
+    const isValidPassword = (test) => {
+      // Check if the password length is at least 8 characters
+      if (test.length < 8) {
+        return false; // Password is too short
+      }
+    
+      // Check if password contains at least one uppercase letter, one lowercase letter, and one number
+      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/;
+    
+      if (!regex.test(test)) {
+        return false; // Password doesn't meet the required conditions
+      }
+    
+      return true; // Password is valid
     }
+    
 
     const handleSubmit = async (e) =>{
      e.preventDefault();
-     if(isValidPassword(password)!=-1 ){
-      console.log('email = '+email);
-      console.log('token = '+token);
+     if(isValidPassword(password)){
          setSuccess(passwordRef.current);
            if(password===confirmPass){
               setSuccess(confirmPassRef.current);
@@ -94,8 +93,9 @@ function ResetPassword() {
                                            Swal.fire({
                                              position: "top",
                                              icon: "warning",
-                                             title: "Warning",
+                                             title: `<h3 style="color: red; font-size: 18px; font-weight: bold; margin-bottom: 10px;">Link expired</h3>`,
                                              text: "Your reset password link has expired",
+                                             html: `<p style="color: #FFA500; font-size: 20px; font-weight: 800; line-height: 1.5;">Your reset password link has expired.</p>`,
                                              showConfirmButton: false,
                                              timer: 4500,
                                              width: '400px',
@@ -122,7 +122,7 @@ function ResetPassword() {
                                                                          background: 'white', // Light green background for success
                                                                        })
                                                                        .then(()=>{
-                                                                         navigate('/');
+                                                                         navigate('/login');
                                                                        })
                                              }
                                  
@@ -156,16 +156,19 @@ function ResetPassword() {
            }
      }
      else {
-      setError(passwordRef.current,("password should contain at least 6 characters"));
+      setError(passwordRef.current,("Password must be at least 8 characters long ,include uppercase,lowercase, and a number"));
      }
     }
 
   return (
+     <>
+         
     <div className='FatherLogin'>
            <form onSubmit={handleSubmit}>
-        <div className="input-group">
-          <label htmlFor="">Set New Password</label>
-        <input 
+        <div className="input-groupLogin" >
+          <label htmlFor="" style={{color:'#2196f3'}}>Set New Password</label>
+        <input
+        style={{borderColor:'#2196f3'}} 
         type={showPassword ? "text" : "password"} placeholder='New password'
         ref={passwordRef}
         value={password} 
@@ -176,8 +179,8 @@ function ResetPassword() {
             onClick={togglePasswordVisibility}
             style={{
               position: "absolute",
-              right: "17%",
-              top: "25%",
+              right: "10%",
+              top: "45%",
               transform: "translateY(-40%)",
               cursor: "pointer",
               color: showPassword ? "#007BFF" : "#888",
@@ -188,9 +191,10 @@ function ResetPassword() {
         <div className="error"></div>
         </div>
 
-        <div className="input-group">
-  <label htmlFor="confirmPassword">Confirm Password</label>
+        <div className="input-groupLogin">
+  <label htmlFor="confirmPassword" style={{color:'#2196f3'}}>Confirm Password</label>
   <input
+    style={{borderColor:'#2196f3'}}
     type={showConfrimPassword ? "text" : "password"} 
     placeholder="Confirm password"
     value={confirmPass}
@@ -201,8 +205,8 @@ function ResetPassword() {
     onClick={toggleConfirmPasswordVisibility}
     style={{
       position: "absolute",
-      right: "17%",
-      top: "62%",
+      right: "10%",
+      top: "45%",
       transform: "translateY(-50%)",
       cursor: "pointer",
       color: showConfrimPassword ? "#007BFF" : "#888",
@@ -214,12 +218,13 @@ function ResetPassword() {
 </div>
 
 
-        <div className="input-group">
-      <button className='confirmButton' onClick={handleSubmit}>Confrim</button>
+        <div className="input-groupLogin">
+      <button className='forgetPasswordBtn' onClick={handleSubmit}>Confrim</button>
      </div>
 
         </form>
     </div>
+     </>
   )
 }
 

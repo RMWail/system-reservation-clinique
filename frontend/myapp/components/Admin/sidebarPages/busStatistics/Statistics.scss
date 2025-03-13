@@ -1,0 +1,105 @@
+.statistics-container {
+  padding: 2rem;
+  
+  .statistics-title {
+    color: #333;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    font-weight: 600;
+  }
+
+  .statistics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    
+    .stat-card {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      border-left: 4px solid var(--card-color);
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .card-icon {
+        background: rgba(var(--card-color-rgb), 0.1);
+        padding: 1rem;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+          font-size: 2.5rem;
+          color: var(--card-color);
+        }
+      }
+
+      .card-content {
+        flex: 1;
+
+        .card-title {
+          color: #666;
+          font-size: 1rem;
+          margin-bottom: 0.5rem;
+          font-weight: 500;
+        }
+
+        .card-value {
+          color: #333;
+          font-size: 2rem;
+          font-weight: 700;
+          margin: 0;
+        }
+      }
+
+      // Generate RGB values for each color
+      &[style*="--card-color: #4CAF50"] { --card-color-rgb: 76, 175, 80; }
+      &[style*="--card-color: #2196F3"] { --card-color-rgb: 33, 150, 243; }
+      &[style*="--card-color: #F44336"] { --card-color-rgb: 244, 67, 54; }
+      &[style*="--card-color: #FF9800"] { --card-color-rgb: 255, 152, 0; }
+      &[style*="--card-color: #9C27B0"] { --card-color-rgb: 156, 39, 176; }
+      &[style*="--card-color: #795548"] { --card-color-rgb: 121, 85, 72; }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .statistics-container {
+    padding: 1rem;
+
+    .statistics-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+
+      .stat-card {
+        padding: 1rem;
+
+        .card-icon svg {
+          font-size: 2rem;
+        }
+
+        .card-content {
+          .card-title {
+            font-size: 0.9rem;
+          }
+
+          .card-value {
+            font-size: 1.5rem;
+          }
+        }
+      }
+    }
+  }
+}

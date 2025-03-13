@@ -23,7 +23,7 @@
 
   &::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background-color: #2196f3;
+    background-color: #1a73e8; // Modern Google blue
   }
 
   &.sidebar-show {
@@ -43,7 +43,7 @@
     justify-content: flex-start;
     padding-bottom: 20px;
     margin-bottom: 20px;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e8f0fe;
   }
 
   .sidebar-brand {
@@ -54,12 +54,16 @@
     .sidebar-brand-text {
       font-size: 1.2rem;
       font-weight: 900;
-      color: #2196f3;
+      color: #1a73e8; // Modern Google blue
       white-space: nowrap;
         
       @media(max-width: 1200px) {
         display: none;
       }
+    }
+
+    .brand-icon {
+      color: #1a73e8; // Modern Google blue
     }
   }
 
@@ -71,7 +75,7 @@
   }
 
   .menu-item {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 
     &:last-child {
       margin-bottom: 0;
@@ -83,21 +87,21 @@
     align-items: center;
     padding: 12px 15px;
     border-radius: 10px;
-    color: #64748b;
+    color: #4285f4; // Light Google blue
     transition: all 0.3s ease;
     white-space: nowrap;
 
     &:hover {
-      background-color: #f8fafc;
-      color: #2196f3;
+      background-color: #e8f0fe; // Very light blue
+      color: #1967d2; // Darker Google blue
 
       .menu-link-icon {
-        color: #2196f3;
+        color: #1967d2; // Darker Google blue
       }
     }
 
     &.active {
-      background-color: #2196f3;
+      background-color: #1a73e8; // Modern Google blue
       color: #ffffff;
 
       .menu-link-icon {
@@ -114,7 +118,7 @@
   .menu-link-icon {
     display: flex;
     align-items: center;
-    color: #64748b;
+    color: #4285f4; // Light Google blue
     transition: all 0.3s ease;
   }
 
@@ -131,6 +135,6 @@
   .sidebar-menu2 {
     margin-top: auto;
     padding-top: 20px;
-    border-top: 1px solid #e0e0e0;
+    border-top: 1px solid #e8f0fe;
   }
 }
