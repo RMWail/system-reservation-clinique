@@ -8,48 +8,25 @@ import { translations } from '../../../../translations/translations';
 import LoadingData from '../loadingData/LoadingData.jsx';
 import LoadingError from '../loadingError/LoadingError.jsx';
 import { FaUniversity } from 'react-icons/fa';
+import { useUniversity } from '../../../../hooks/useUniversity.js';
 
 const UniversitySection = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
-  const [stations, setStations] = useState([]);
-  const [universitySections, setUniversitySections] = useState([]);
+  const {universitySections, loading, error, addUniversity, updateUniversity} = useUniversity();
   const [searchQuery, setSearchQuery] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [editingStation, setEditingStation] = useState(null);
   const { currentLanguage } = useLanguage();
   const t = translations[currentLanguage];
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [errors,setErrors] = useState({});
-  const [newStation, setNewStation] = useState({
+  const [newUniversity, setNewUniversity] = useState({
     id: '',
     name: '',
+    modify:1,
+    delete: 1,
   });
 
-  useEffect(() => {
-    const fetchStations = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const response = await axios.get(`${apiUrl}/getUniversitySections`);
-        console.log(response.data.universitySections);
-        setUniversitySections(
-          response.data.universitySections.map(({ univSection_Id, univ_name }) => ({
-            id: univSection_Id,
-            name: univ_name,
-          }))
-        );
-      } catch (error) {
-        setError(error.message);
-        
-      }
-      finally {
-        setLoading(false);
-      }
-    };
-
-      fetchStations();
-  }, []);
+    
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
@@ -59,11 +36,11 @@ const UniversitySection = () => {
     university.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleEdit = (station) => {
-    setEditingStation(station);
-    setNewStation({
-      id:station.id,
-      name:station.name,
+  const handleEdit = (university) => {
+    setEditingStation(university);
+    setNewUniversity({
+      id:university.id,
+      name:university.name,
     });
     setShowModal(true);
   };
@@ -73,15 +50,15 @@ const UniversitySection = () => {
 
     const validationErrors = {};
 
-    if(!newStation.name.trim()){
+    if(!newUniversity.name.trim()){
       validationErrors.stationName = `${t.admin.validationErrors.stationName}`;
     }
 
     setErrors(validationErrors);
 
+
     if(Object.keys(validationErrors).length ==0){
       if (editingStation) {
-
       
         swal.fire({
           icon:'warning',
@@ -91,11 +68,13 @@ const UniversitySection = () => {
           confirmButtonText:`${t.admin.stations.confirm}`,
           cancelButtonText:`${t.admin.stations.cancel}`,
           confirmButtonColor:'#e67e22'
-         }).then((res)=>{
+         }).then(async(res)=>{
           if(res.isConfirmed){
-            axios.post(`${apiUrl}/updateStation`, newStation)
-            .then(response => {
-              console.log(response.data.message);
+            const updateUnivResponse = await updateUniversity(newUniversity);
+         
+            console.log("update univ response = "+updateUnivResponse);
+            
+            if(updateUnivResponse.status == 200){
               swal.fire({
                 icon:'success',
                 title:t.admin.stations.success, 
@@ -103,18 +82,17 @@ const UniversitySection = () => {
                 showConfirmButton:false,
                 timer:3000,
               });
-              setStations(prev => prev.map(station => 
-                station.id == editingStation.id ? { ...newStation, id: station.id } : station
-              ));
-            
-        
-            })
-            .catch(error => {
-              swal.fire('Error', `${t.admin.stations.error}`, 'error');
-            });  
-          
+             }
+
+             if(updateUnivResponse.code =='ERR_NETWORK'){
+              swal.fire('Error',`${t.admin.stations.errorNetwork}`,'error');
+            }
+       else if(updateUnivResponse.code =='ERR_BAD_REQUEST'){
+        swal.fire('Error',`${addUnivResponse.response.data.error}`,'error');
+       }  
+
             setShowModal(false);
-            setNewStation({
+            setNewUniversity({
               id:'',
               name: '',
             });
@@ -122,26 +100,23 @@ const UniversitySection = () => {
           }
           
          })
-  
-  
-  
       
       } else {
   
          swal.fire({
           icon:'warning',
           title:t.admin.stations.confirmation,
-          text:`${t.admin.stations.confirmAdd}`,
+          text:`${t.admin.univSection.confirmAdd}`,
           showCancelButton:true,
           confirmButtonText:`${t.admin.stations.confirm}`,
           cancelButtonText:`${t.admin.stations.cancel}`,
           confirmButtonColor:'#e67e22'
-         }).then((res)=>{
+         }).then(async (res)=>{
           if(res.isConfirmed){
-            axios.post(`${apiUrl}/addStation`, newStation)
-            .then(response => {
-              console.log(response.data.message);
-              
+            const addUnivResponse = await addUniversity(newUniversity);
+            console.log("add univ response = "+addUnivResponse);
+
+            if(addUnivResponse.status == 200){
               swal.fire({
                 icon:'success',
                 title:t.admin.stations.success, 
@@ -149,15 +124,17 @@ const UniversitySection = () => {
                 showConfirmButton:false,
                 timer:3000,
               });
-              const addedStation = { id: response.data.newStationId, name: newStation.name };
-              setStations(prev => [...prev,addedStation]);
-            })
-            .catch(error => {
-              swal.fire('Error', `${t.admin.stations.error}`, 'error');
-            });  
+             }
+                      
+             if(addUnivResponse.code =='ERR_NETWORK'){
+              swal.fire('Error',`${t.admin.stations.errorNetwork}`,'error');
+            }
+       else if(addUnivResponse.code =='ERR_BAD_REQUEST'){
+        swal.fire('Error',`${addUnivResponse.response.data.error}`,'error');
+       }  
           
             setShowModal(false);
-            setNewStation({
+            setNewUniversity({
               id:'',
               name: '',
             });
@@ -175,7 +152,7 @@ const UniversitySection = () => {
 
 
 
-  const handleDelete = (stationId) => {
+  const handleDelete = (universityId) => {
     swal.fire({
       icon:'warning',
       iconColor:'red',
@@ -187,7 +164,7 @@ const UniversitySection = () => {
       confirmButtonColor:'#e67e22'
      }).then((res)=>{
       if(res.isConfirmed){
-        axios.post(`${apiUrl}/deleteStation`,{stationId:stationId})
+        axios.post(`${apiUrl}/deleteUniversitySection`,{universityId:universityId})
         .then((res)=>{
           if(res.data.message!='Exist'){
             console.log(res.data.message);
@@ -233,19 +210,19 @@ const UniversitySection = () => {
           <MdSearch className="search-icon" />
           <input
             type="text"
-            placeholder={t.admin.stations.search}
+            placeholder={t.admin.univSection.searchUniv}
             value={searchQuery}
             onChange={handleSearch}
           />
           
         </div>
         <button className="add-station-btn" onClick={() => setShowModal(true)}>
-          <MdAdd /> {t.admin.stations.addStation}
+          <MdAdd /> {t.admin.univSection.addUnivSection}
         </button>
       </div>
 
       <div className="stations-grid">
-        {filteredStations.map((univSection,index) => (
+        {filteredStations.map((universitySection,index) => (
           <div key={index} className="station-card">
             <div className="station-card-header">
               <div className="station-info">
@@ -253,16 +230,21 @@ const UniversitySection = () => {
                   <FaUniversity />
                 </div>
                 <div className="station-details">
-                  <h3>{univSection.name}</h3>
+                  <h3>{universitySection.name}</h3>
                 </div>
               </div>
               <div className="station-actions">
-                <button onClick={() => handleEdit(univSection)} className="edit-btn">
+                <button onClick={() => handleEdit(universitySection)} className="edit-btn">
                   <MdEdit />
                 </button>
-                <button onClick={() => handleDelete(univSection.id)} className="delete-btn">
+       {
+          universitySection.delete===1 ? 
+                  <button onClick={() => handleDelete(universitySection.id)} className="delete-btn">
                   <MdDelete />
-                </button>
+                </button> :
+                <>
+                </>
+       }
               </div>
             </div>
           </div>
@@ -272,13 +254,13 @@ const UniversitySection = () => {
       {showModal && (
         <div className="modal-overlay">
           <div className="modal">
-            <h2>{editingStation ? t.admin.stations.editStation : t.admin.stations.addStation}</h2>
+            <h2>{editingStation ? t.admin.stations.editStation : t.admin.univSection.addUnivSection}</h2>
             <div className="form-group">
-              <label>{t.admin.stations.stationName}</label>
+              <label>{t.admin.univSection.univName}</label>
               <input
                 type="text"
-                value={newStation.name}
-                onChange={(e) => setNewStation(prev => ({ ...prev, name: e.target.value }))}
+                value={newUniversity.name}
+                onChange={(e) => setNewUniversity(prev => ({ ...prev, name: e.target.value }))}
                 placeholder={t.admin.stations.enter.stationName}
               />
               {errors.stationName && <span style={{color:'red'}}>{errors.stationName}</span>}
@@ -287,7 +269,7 @@ const UniversitySection = () => {
               <button onClick={() => {
                 setShowModal(false);
                 setEditingStation(null);
-                setNewStation({
+                setNewUniversity({
                   id:'',
                   name: '',
                 });

@@ -76,10 +76,17 @@ const BusManagement = () => {
     return matchesSearch && matchesAvailability;
   });
 
+const isValidFullName = (test) => {
+  const re = /^[A-Za-z]+(?: [A-Za-z]+)*$/;
+  return re.test(test.trim());
+};
+/*
   const isValidString = (test)=>{
-    const re = /^(([a-zA-Z ]+)())$/
+    const re = /^[a-zA-Z ]+$/
     return re.test(String(test));
   }
+*/
+
   
   const isValidTelephone = (telephone) => {
     const re = /^(0[5|6|7][0-9]{8})$/
@@ -89,6 +96,7 @@ const BusManagement = () => {
 
 
   const handleEdit = (bus) => {
+    
     setOldBusNbr(bus.NUMERO_BUS);
     setEditingBus({ ...bus });  // Clone object to avoid direct mutation
     setNewBus({ ...bus });      // Clone object to avoid direct mutation
@@ -97,14 +105,15 @@ const BusManagement = () => {
   
 
   const handleSubmit = () => {
-
+     console.log(newBus.nomChauffeur);
+     console.log("validite : "+isValidFullName(newBus.nomChauffeur));
     const validationErrors = {};
       console.log(newBus.NUMERO_BUS);
     if(newBus.NUMERO_BUS<=0){
       validationErrors.NUMERO_BUS = `${t.admin.validationErrors.NUMERO_BUS}`;
     }
 
-    if(!isValidString(newBus.nomChauffeur)){
+    if(!isValidFullName(newBus.nomChauffeur)){
       validationErrors.nomChauffeur = `${t.admin.validationErrors.nomChauffeur}`;
     }
 
