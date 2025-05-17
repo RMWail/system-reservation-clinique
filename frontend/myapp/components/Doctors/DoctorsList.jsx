@@ -12,7 +12,7 @@ function DoctorsList() {
   const { currentLanguage, toggleLanguage } = useLanguage();
   const t = translations[currentLanguage];
   const [selectedDoctor, setSelectedDoctor] = useState(null);
-
+  const days = ['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const [doctors,setDoctors] = useState([]);
 
   useEffect(()=>{
@@ -29,40 +29,6 @@ function DoctorsList() {
     }
   };
 
- /*
-  const doctors = [
-    {
-      id: 1,
-      name: "Dr. Sarah Johnson",
-      specialization: t.doctors.specializations.cardiologist,
-      experience: "15",
-      rating: 4.9,
-      reviews: 128,
-      location: "Medical Center, Floor 3",
-      nextAvailable: "Today",
-    },
-    {
-      id: 2,
-      name: "Dr. Michael Chen",
-      specialization: t.doctors.specializations.pediatrician,
-      experience: "12",
-      rating: 4.8,
-      reviews: 96,
-      location: "Children's Wing, Floor 2",
-      nextAvailable: "Tomorrow",
-    },
-    {
-      id: 3,
-      name: "Dr. Emily Rodriguez",
-      specialization: t.doctors.specializations.dermatologist,
-      experience: "10",
-      rating: 4.7,
-      reviews: 84,
-      location: "Dermatology Clinic, Floor 1",
-      nextAvailable: "Today",
-    }
-  ]; */
-
   const handleDoctorClick = (doctor) => {
     setSelectedDoctor(doctor);
     navigate('/AppointmentBooking', {
@@ -75,69 +41,91 @@ function DoctorsList() {
   };
 
   return (
-    <div className="doctors-list-container">
-      <div className="doctors-header">
-        <h1>{t.doctors.title}</h1>
-        <p>{t.doctors.subtitle}</p>
-        <button className="language-toggle" onClick={toggleLanguage}>
-          <FaGlobe className="icon" />
-          {currentLanguage.toUpperCase()}
-        </button>
-      </div>
-
-      <div className="doctors-grid">
-        {doctors.map((doctor) => (
-          <div 
-            key={doctor.medecin_Id} 
-            className="doctor-card"
-            onClick={() => handleDoctorClick(doctor)}
-          >
-            <div className="doctor-card-header">
-              <div className="doctor-icon">
-                <FaUserMd />
-              </div>
-              <div className="doctor-badge">
-                {doctor.medecin_Specialite}
-              </div>
-            </div>
-
-            <div className="doctor-card-body">
-              <h2>{doctor.nomPrenom}</h2>
-              
-              <div className="doctor-stats">
-                <div className="stat">
-                  <FaClock className="icon" />
-                  <span>{doctor.medecin_Experience} {t.doctors.experience}</span>
-                </div>
-           {/*
-                           <div className="stat rating">
-                  <FaStar className="icon star" />
-                  <span>{doctor.rating}</span>
-                  <span className="reviews">({doctor.reviews} {t.doctors.reviews})</span>
-                </div>
-           */}
-              </div>
-
-              <div className="doctor-location">
-                <MdEmail className="icon" />
-                <span>{doctor.medecin_Email}</span>
-              </div>
-
-              <div className="doctor-availability">
-                <div className="next-available">
-                  <FaCalendarCheck className="icon" />
-                  <span>{doctor.nextAvailable}</span>
-                </div>
-              </div>
-
-              <button className="book-appointment-btn">
-                {t.nav.book}
-              </button>
-            </div>
+        doctors ? (
+          <div className="doctors-list-container">
+          <div className="doctors-header">
+            <h1>{t.doctors.title}</h1>
+            <p>{t.doctors.subtitle}</p>
+            <button className="language-toggle" onClick={toggleLanguage}>
+              <FaGlobe className="icon" />
+              {currentLanguage.toUpperCase()}
+            </button>
           </div>
-        ))}
-      </div>
-    </div>
+    
+          <div className="doctors-grid">
+            {doctors.map((doctor) => (
+              <div 
+                key={doctor.medecin_Id} 
+                className="doctor-card"
+                onClick={() => handleDoctorClick(doctor)}
+              >
+                <div className="doctor-card-header">
+                  <div className="doctor-icon">
+                    <FaUserMd />
+                  </div>
+                  <div className="doctor-badge">
+                    {doctor.medecin_Specialite}
+                  </div>
+                </div>
+    
+                <div className="doctor-card-body">
+                  <h2>{doctor.nomPrenom}</h2>
+                  
+                  <div className="doctor-stats">
+                    <div className="stat">
+                      <FaClock className="icon" />
+                      <span>{doctor.medecin_Experience} {t.doctors.experience}</span>
+                    </div>
+               {/*
+                               <div className="stat rating">
+                      <FaStar className="icon star" />
+                      <span>{doctor.rating}</span>
+                      <span className="reviews">({doctor.reviews} {t.doctors.reviews})</span>
+                    </div>
+               */}
+                  </div>
+    
+                  <div className="doctor-location">
+                    <MdEmail className="icon" />
+                    <span>{doctor.medecin_Email}</span>
+                  </div>
+    
+                  <div className="doctor-availability">
+                  <div className="availability">
+                    <h3>Available on:</h3>
+                    <ul>
+                      {doctor.medecin_availability.split('').map((key,index) => (
+                        
+                          doctor.medecin_availability[index]==='1' ? <li key={`${key}-${days[index]}`}>{days[index]}</li> : null
+                        
+                      ))}
+                    </ul>
+                  </div>
+                  </div>
+    
+                  <button className="book-appointment-btn">
+                    {t.nav.book}
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        ) : (
+          <>
+                <div className="doctors-list-container">
+                <div className="doctors-header">
+            <h1>{t.doctors.title}</h1>
+            <p>{t.doctors.subtitle}</p>
+            <button className="language-toggle" onClick={toggleLanguage}>
+              <FaGlobe className="icon" />
+              {currentLanguage.toUpperCase()}
+            </button>
+          </div>
+            <h1 style={{textAlign:'center'}}>{t.doctors.noData}</h1>
+            </div>
+          </>
+        )
   );
 }
 

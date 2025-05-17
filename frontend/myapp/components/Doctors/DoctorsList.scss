@@ -160,15 +160,30 @@
         background: #f8fafc;
         border-radius: 12px;
 
-        .next-available {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          color: #64748b;
-          font-size: 0.9rem;
 
-          .icon {
-            color: #10b981;
+        .availability {
+          margin-top: 1rem;
+
+          h3 {
+            color: #2c3e50;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+          }
+
+          ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+
+            li {
+              background-color: #e8f0fe;
+              color: #2c7be5;
+              padding: 0.25rem 0.75rem;
+              border-radius: 15px;
+              font-size: 0.875rem;
+            }
           }
         }
 

@@ -61,7 +61,8 @@ export const translations = {
         cardiologist: 'Cardiologist',
         pediatrician: 'Pediatrician',
         dermatologist: 'Dermatologist'
-      }
+      },
+      noData: 'No data available because of a server error',
     },
     appointment: {
       title: 'Book an Appointment',
@@ -78,7 +79,7 @@ export const translations = {
       pdfTitle: 'Your Appointment Reservation',
       reservedOnline: 'Reserved online at',
       reservationDate: 'Reservation Date',
-      reservationId: 'Reservation ID',
+      reservationId: 'Reservation N° : ',
       patient: 'Patient',
       doctor: 'Doctor',
       telephone: 'Telephone',
@@ -154,7 +155,8 @@ export const translations = {
         cardiologist: 'Cardiologue',
         pediatrician: 'Pdiatre',
         dermatologist: 'Dermatologue'
-      }
+      },
+      noData: `aucune donnée disponible en raison d'une erreur de serveur`,
     },
     appointment: {
       title: 'Prendre un Rendez-vous',
@@ -171,7 +173,7 @@ export const translations = {
       pdfTitle: 'Votre Réservation de Rendez-vous',
       reservedOnline: 'Réservé en ligne le',
       reservationDate: 'Date de Réservation',
-      reservationId: 'ID de Réservation',
+      reservationId: 'N° de réservation : ',
       patient: 'Patient',
       doctor: 'Médecin',
       telephone: 'Téléphone',
@@ -247,7 +249,8 @@ export const translations = {
         cardiologist: 'طبيب قلب',
         pediatrician: 'طبيب أطفال',
         dermatologist: 'طبيب جلدية'
-      }
+      },
+      noData: 'لا توجد بيانات متاحة بسبب خطأ في الخادم'
     },
     appointment: {
       title: 'حجز موعد',

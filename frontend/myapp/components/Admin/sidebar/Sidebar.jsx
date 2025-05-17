@@ -136,28 +136,15 @@ function Sidebar() {
               </Link>
             </li>
 
- {/**
-  * 
-  *             <li className="menu-item">
-              <Link
-                to="/admin/settings"
-                className={`menu-link ${activeMenuItem === "settings" ? "active" : ""}`}
-                onClick={() => handleMenuItemActive("settings")}
-              >
-                <span className="menu-link-icon">
-                  <MdSettings size={22} />
-                </span>
-                <span className="menu-link-text">Settings</span>
-              </Link>
-            </li>
-  * 
-  */}
-
             <li className="menu-item">
               <Link
                 to="/"
                 className={`menu-link ${activeMenuItem === "logout" ? "active" : ""}`}
-                onClick={() => handleMenuItemActive("logout")}
+                onClick={() => {handleMenuItemActive("logout");
+                  sessionStorage.removeItem('token');
+                  sessionStorage.removeItem('accountId');
+                  sessionStorage.removeItem('activeMenu');
+                }}
               >
                 <span className="menu-link-icon">
                   <MdOutlineLogout size={22} />

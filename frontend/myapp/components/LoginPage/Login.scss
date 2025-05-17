@@ -87,14 +87,14 @@
         height: 40px;
         text-align: center;
         background-color: #2196f3;
-        border: 1px solid black;
+        border: none;
         border-radius: 15px;
         margin: 20px auto;
         transition: transform 0.3s ease-in-out;
 
         &:hover {
           cursor: pointer;
-          background: #1a56db;
+          background: #1976d2;
           transform: translateY(-2px);
         }
       }

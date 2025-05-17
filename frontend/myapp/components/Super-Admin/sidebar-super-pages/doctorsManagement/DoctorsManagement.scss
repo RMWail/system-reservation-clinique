@@ -167,6 +167,23 @@
             border-color: #2c7be5;
           }
         }
+        select {
+          width: 100%;
+          padding: 0.8rem;
+          border: 1px solid #e0e0e0;
+          border-radius: 8px;
+          font-size: 1rem;
+          transition: border-color 0.3s ease;
+
+          &:focus {
+            outline: none;
+            border-color: #2196f3;
+          }
+
+          &::placeholder {
+            color: #9e9e9e;
+          }
+        }
 
         .availability-checkboxes {
           display: grid;
@@ -221,6 +238,11 @@
     }
   }
 }
+
+.alertDeleteDoctorTitle {
+  color:#e53e3e;
+}
+
 
 @media (max-width: 768px) {
   .doctors-management {

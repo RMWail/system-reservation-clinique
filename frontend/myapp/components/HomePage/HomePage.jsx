@@ -52,7 +52,7 @@ const HomePage = () => {
       </div>
 
       <nav className="navbar">
-        <div className="nav-logo">MediCare</div>
+        <div className="nav-logo">Errazi clinique</div>
         <div className="nav-links">
           <a href="#about">{t.nav.about}</a>
           <a href="#services">{t.nav.services}</a>

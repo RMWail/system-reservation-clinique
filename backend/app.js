@@ -1,6 +1,6 @@
 import express from 'express';
 import adminRouting from './routes/adminRouting.js';
-import loginSignUpRouting from './routes/loginAndSignUpRouting.js'
+import loginRouting from './routes/loginRouting.js'
 import patientRouting from './routes/patientRouting.js';
 import forgetAndResetPassRouting from './routes/forgetAndResetPass.js';
 import accountVerificationRouting from './routes/accountVerification.js';
@@ -13,6 +13,11 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { Server as socketio } from 'socket.io';
 import dotenv from 'dotenv';
+
+
+// Path to the .ttf or .otf font file
+  // This will output the Base64 string
+
 
 dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
@@ -28,7 +33,7 @@ app.use(cors({
   methods: ["GET","POST"]
 }
 ));
-// app.use(morgan('short'))
+ app.use(morgan('short'))
 app.use(bodyParser.json()); // for parsing application/x-www-form-urlencoded
 app.use(express.urlencoded({extended:true,parameterLimit:100000,limit:"500mb"}));
 
@@ -54,7 +59,7 @@ app.use((req,res,next)=>{
 
 
 app.use('/',adminRouting); // The routing of the admin 
-app.use('/',loginSignUpRouting);  // The routing of login and sign up operations
+app.use('/',loginRouting);  // The routing of login and sign up operations
 app.use('/',patientRouting);  // The routing of the customer operations
 app.use('/',forgetAndResetPassRouting); // The routing of forget and reset password for customer
 app.use('/',accountVerificationRouting); // The routing of customer account otp code verification

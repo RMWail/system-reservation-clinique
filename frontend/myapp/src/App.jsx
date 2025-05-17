@@ -1,22 +1,22 @@
 import { useEffect, useRef } from 'react'
-import SignUp from '../components/SignUpPage/SignUp'
 import Login from '../components/LoginPage/Login'
 import ForgetPassword from '../components/ForgetPassword/ForgetPassword'
 import ResetPassword from '../components/ResetPassword/ResetPassword'
 import HomePage from '../components/HomePage/HomePage'
 import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom'
 import BaseLayout from '../components/Admin/layout/BaseLayout'
-import AdminHome from '../components/Admin/sidebarPages/adminHomePage/AdminHome'
+import BaseLayout2 from '../components/Super-Admin/layout/BaseLayout2'
+import DoctorsStatistics from '../components/Super-Admin/sidebar-super-pages/doctorsStatistics/DoctorsStatistics'
 import Appointments from '../components/Admin/sidebarPages/appointments/Appointments'
-import DoctorsManagement from '../components/Admin/sidebarPages/doctorsManagement/DoctorsManagement'
+import DoctorsManagement from '../components/Super-Admin/sidebar-super-pages/doctorsManagement/DoctorsManagement'
 import Statistics from '../components/Admin/sidebarPages/statistics/Statistics'
-import History from '../components/Admin/sidebarPages/history/History'
-import Settings from '../components/Admin/sidebarPages/settings/Settings'
+//import Settings from '../components/Admin/sidebarPages/settings/Settings'
 import OtpVerificationDegits from '../components/OtpVerification/OtpVerificationDegits'
 import DoctorsList from '../components/Doctors/DoctorsList'
 import AppointmentBooking from '../components/AppointmentBooking/AppointmentBooking'
 import CreateReservation from '../components/Admin/sidebarPages/createReservation/createReservation';
 import AdminHistory from '../components/Admin/sidebarPages/adminHistory/AdminHistory'
+import AddNewDoctor from '../components/Super-Admin/sidebar-super-pages/add-doctor/AddNewDoctor';
 import './App.scss'
 import io from 'socket.io-client'
 import { LanguageProvider } from '../context/LanguageContext';
@@ -37,7 +37,7 @@ function App() {
       <Router>
         <Routes>
           <Route path='/' element={<HomePage/>} />
-          <Route path='/admin/login' element={<Login/>} />
+          <Route path='/login' element={<Login/>} />
           <Route path='/forget-password' element={<ForgetPassword/>} />
           <Route path='/reset-password/:email/:token' element={<ResetPassword/>} />
           <Route path='/otp-verification/:email' element={<OtpVerificationDegits/>} />
@@ -49,13 +49,22 @@ function App() {
           {/* Admin routes */}
           <Route element={<BaseLayout/>}>
             <Route path='/admin' element={<Statistics/>} />
-            <Route path='/admin/doctors' element={<DoctorsManagement/>} />
+            {/* <Route path='/admins/doctors' element={<DoctorsManagement/>} /> */}
             <Route path='/admin/create-reservation' element={<CreateReservation/>} />
             <Route path='/admin/appointments' element={<Appointments/>} />
             {/* <Route path='/admin/statistics' element={<Statistics/>} /> */}
             <Route path='/admin/history' element={<AdminHistory/>} />
-            <Route path='/admin/settings' element={<Settings/>} />
+           {/*  <Route path='/admin/settings' element={<Settings/>} /> */}
           </Route>
+
+          {/* Super Admin routes */}
+
+                     <Route element={<BaseLayout2/>}>
+            <Route path='/adminSuper' element={<DoctorsManagement/>} />
+            <Route path='/adminSuper/add-doctor' element={<AddNewDoctor/>} />
+            <Route path='/adminSuper/doctors-statistics' element={<DoctorsStatistics/>} />
+          </Route>
+
 
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>

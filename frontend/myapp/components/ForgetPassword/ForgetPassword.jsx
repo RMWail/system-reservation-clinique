@@ -128,11 +128,12 @@ function ForgetPassword() {
         })
         .catch((err)=>{
           console.log(err);
-          Swal.fire({
+        /*
+                  Swal.fire({
             position: "top",
             icon: "warning",
             title: "Warning",
-            text: "An error occurred. Please try again later.",
+            text: "An error appeared. Please try again later.",
             showConfirmButton: false,
             timer: 4500,
             width: '400px',
@@ -141,7 +142,13 @@ function ForgetPassword() {
               title: 'custom-swal-title-warning',
             },
             background: '#fff5e6', // Light orange background for warning
-          });
+          }); */
+          toast.error('An error appeared with ther server. Please try again Later!.',{
+            style: {
+              color: 'red',
+              fontWeight: 'bold',
+            },
+          })
         })
       
       }
@@ -160,24 +167,45 @@ function ForgetPassword() {
   return (
      <>
          <Toaster position="top-center" richColors=""/>
-    <div className='FatherLogin'>
+
+         
+         <div className='forgetPasswordContainer'>
            <form onSubmit={handleSubmit}>
         <div className="input-group">
-          <label htmlFor="customerName" style={{color:'orangered'}}>Your Email Account</label>
-        <input type="text" placeholder='Enter Your Email'value={email} onChange={(e)=>{setEmail(e.target.value);
+          <label htmlFor="customerName" style={{color:'#2196f3'}}>Your Email Account</label>
+        <input type="text" style={{borderColor:'#2196f3'}} placeholder='Enter Your Email'value={email} onChange={(e)=>{setEmail(e.target.value);
          // console.log(email);
         }}ref={emailRef}/>
         <div className="error"></div>
         </div>
 
         <div className="input-group">
-      <button className='confirmButton' onClick={handleSubmit}>Send</button>
+      <button className='forgetPasswordBtn' onClick={handleSubmit}>Send</button>
      </div>
 
         </form>
     </div>
+
+
      </>
   )
 }
 
 export default ForgetPassword
+
+/*
+<div className='forgetPasswordContainer'>
+  <form onSubmit={handleSubmit}>
+    <div className="emailInputGroupForgetPassword">
+      <label htmlFor="customerName" style={{color:'orangered'}}>Your Email Account</label>
+      <input type="text" placeholder='Enter Your Email' value={email} onChange={(e)=>{setEmail(e.target.value);}} ref={emailRef}/>
+      <div className="error"></div>
+    </div>
+
+    <div className="buttonInputGroupForgetPassword">
+      <button className='confirmButton' onClick={handleSubmit}>Send</button>
+    </div>
+  </form>
+</div>
+
+*/

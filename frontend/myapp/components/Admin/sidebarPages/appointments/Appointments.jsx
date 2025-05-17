@@ -46,8 +46,12 @@ function Appointments() {
         duration:5000,
         className: "toastClass",
       })
-
-      setAppointments((prevAppointments)=>[...prevAppointments,newAppointment]);
+       const now = new Date();
+       const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`
+       if(newAppointment.reservation_Date==today) {
+        console.log('yess');
+        setAppointments((prevAppointments)=>[...prevAppointments,newAppointment]);
+       }
       
     })
 
@@ -130,12 +134,13 @@ function Appointments() {
           })
           .catch((err) => {
             swal.fire({
-              title: 'Error!',
-              text: 'Something went wrong',
-              icon: 'error',
-            });
-            console.log(err);
-          });
+              icon:'error',
+              title:'Oops',
+              html:'<span style="color:red">Network error,operation has failed Please try again Later! </span>',
+              showConfirmButton:false,
+              timer:4000,
+            })
+          })
       }
     });
   };
@@ -144,6 +149,15 @@ function Appointments() {
   //  e.preventDefault();
     console.log('closing is fired');
     setSelectedAppointment(null)
+  }
+
+  const getDoctorInfo = (appointment,value)=>{
+    if(value==0){
+      return appointment.split(':')[0];
+    } 
+    else {
+      return `${appointment.split(':')[0]} : ${appointment.split(':')[1]}`;
+    }
   }
 
   return (
@@ -185,7 +199,7 @@ function Appointments() {
           <table>
             <thead>
               <tr>
-                <th>ID</th>
+                <th>N°</th>
                 <th>Telephone</th>
                 <th>Patient Name</th>
                 <th>gender</th>
@@ -207,9 +221,9 @@ function Appointments() {
                       appointment.patient_NomPrenom.toLowerCase().includes(searchQuery.toLowerCase())
                     )
                   )
-                  .map((appointment) => (
+                  .map((appointment,index) => (
                     <tr key={appointment.reservation_Id}>
-                      <td>{appointment.reservation_Id}</td>
+                      <td>{index+1}</td>
                       <td>{appointment.patient_Telephone}</td>
                       <td>{appointment.patient_NomPrenom}</td>
                       <td>
@@ -217,7 +231,7 @@ function Appointments() {
                           {appointment.patient_Genre === 0 ? "male" : "female"}
                         </span>
                       </td>
-                      <td>{appointment.nomPrenom}</td>
+                      <td>{getDoctorInfo(appointment.medecin_Nom_Speciality,0)}</td>
                       <td>{appointment.reservation_Date}</td>
                       <td>
                         <span className={`status-badge ${getStatusColor(appointment.reservation_Etat === 0 ? 'pending' : appointment.reservation_Etat === 1 ? 'confirmed' : 'cancelled')}`}>
@@ -238,8 +252,8 @@ function Appointments() {
             ) : (
               <tbody>
                 <tr>
-                  <td colSpan="8" className="no-appointments">
-                    No reservations yet
+                  <td colSpan="8" className="no-appointments" style={{color:'#2196F3'}}>
+                   <h2> No reservations yet</h2>
                   </td>
                 </tr>
               </tbody>
@@ -275,7 +289,7 @@ function Appointments() {
                   <h3>Appointment Details</h3>
                   <div className="info-group">
                     <span className="label">Doctor</span>
-                    <span className="value">{selectedAppointment.nomPrenom}</span>
+                    <span className="value">{getDoctorInfo(selectedAppointment.medecin_Nom_Speciality,1)}</span>
                   </div>
                   <div className="info-group">
                     <span className="label">Date</span>

@@ -6,9 +6,6 @@ import nodemailer from 'nodemailer';
 dotenv.config();
 const router = express.Router();
 
-const API_CLIENT = process.env.API_CLIENT; 
-const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 const secretKey = process.env.SECRET_KEY;
 
 

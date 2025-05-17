@@ -1,25 +1,24 @@
 import express from 'express';
 import database from '../config/database.js'
-import { encryptWithFixedIV,decryptWithFixedIV } from '../encryptionMethods/encryptionDecryptionMethods.js';
 import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 dotenv.config();
 const router = express.Router();
 
 const API_CLIENT = process.env.API_CLIENT; 
-const secretKey = process.env.SECRET_KEY;
 
 // you already have an active password reset link to update your password 
 
 router.post('/sendResetLinkToGmail',(req,res)=>{
 
   const {email} = req.body;
-  const encryptedEmail=encryptWithFixedIV(email,secretKey);
+  
 
-const checkingLinkSql = 'CALL checkTokenForGmail(?)';
+const checkingLinkSql = 'CALL checkTokenForAdminGmail(?)';
 
-  database.query(checkingLinkSql,encryptedEmail,(err,checkResult)=>{
+  database.query(checkingLinkSql,email,(err,checkResult)=>{
     if(err){
       console.log(err);
       return err;
@@ -42,14 +41,15 @@ const checkingLinkSql = 'CALL checkTokenForGmail(?)';
 
       let sql = 'CALL UpdateToken(?,?,?)';
 
-      database.query(sql,[token,formattedExpiry,encryptedEmail],(err,setTokenResult)=>{
+      database.query(sql,[token,formattedExpiry,email],(err,setTokenResult)=>{
         if(err){
           console.log(err);
-          return err;
+          return res.status(500).json({error:'Error updating token'});
         }
         else {         
        //    console.log('Token result = '+setTokenResult);
            if(setTokenResult.affectedRows>0){
+
             console.log('Token was updated successfully');
             const transporter = nodemailer.createTransport({
         service: process.env.EMAIL_SERVICE,
@@ -63,7 +63,20 @@ const checkingLinkSql = 'CALL checkTokenForGmail(?)';
         from: process.env.SHOP_EMAIL,
         to: email,
         subject: 'Password Reset link',
-        text: `${API_CLIENT}/reset-password/${email}/${token}`
+        text: `
+         Hello,
+
+    We received a request to reset your password for your account. To update your password, please click the link below:
+    
+    ${API_CLIENT}/reset-password/${email}/${token}
+    
+    This link will expire in 24 hours, so please make sure to reset your password before then.
+
+    If you didn't request a password reset, you can safely ignore this email.
+
+    Best regards,
+    Your Shop Team
+        `
       };
       
       transporter.sendMail(mailOptions, function(error, info){
@@ -76,6 +89,9 @@ const checkingLinkSql = 'CALL checkTokenForGmail(?)';
       });
             
 
+           }
+           else {
+            return res.status(401).json({error:'Error updating token'});
            }
     
         }
@@ -97,12 +113,11 @@ const checkingLinkSql = 'CALL checkTokenForGmail(?)';
 
 router.post('/reset-password',async (req,res)=>{
   const {email,token,password}=req.body;
-  const encryptedEmail=encryptWithFixedIV(email,secretKey)
-  const encryptedPass = encryptWithFixedIV(password,secretKey);
+  const hashedPass = await bcrypt.hash(password,10);
 
   let getUserbyEmailAndToken = 'CALL SelectTokenDateByEmailAndToken(?,?)';
 
-  database.query(getUserbyEmailAndToken,[encryptedEmail,token],async(err,resultOfQuery)=>{
+  database.query(getUserbyEmailAndToken,[email,token],async(err,resultOfQuery)=>{
     if(err){
       console.log(err);
       return err;
@@ -115,7 +130,7 @@ router.post('/reset-password',async (req,res)=>{
         let updatePasswordSql = 'CALL UpdateUserPassword(?,?)';
 
         await new Promise((resolve,reject)=>{
-          database.query(updatePasswordSql,[encryptedPass,encryptedEmail],(err,updatePasswordResult)=>{
+          database.query(updatePasswordSql,[hashedPass,email],(err,updatePasswordResult)=>{
             if(err){
               console.log(err);
               reject(err);

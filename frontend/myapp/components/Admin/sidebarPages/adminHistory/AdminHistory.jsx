@@ -11,28 +11,39 @@ function AdminHistory() {
   const [statusFilter, setStatusFilter] = useState('all');
   const [dateFilter, setDateFilter] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [selectedReservation, setSelectedReservation] = useState(null);
 
-  useEffect(() => {
+  useEffect(()=>{
+    const getReservations = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const response = await axios.get(`${apiUrl}/getAppointmentsHistory`);
+      //  console.log(response.data);
+        setReservations(response.data);
+        setFilteredReservations(response.data);
+      } catch (error) {
+        console.error('Error fetching reservations:', error);
+        setReservations([]);
+        setFilteredReservations([]);
+        setError(error.message);
+      }
+      finally {
+        setLoading(false);
+      }
+    };
     getReservations();
-  }, []);
+  },[]);
+
 
   useEffect(() => {
     applyFilters();
   }, [statusFilter, dateFilter, searchQuery, reservations]);
 
-  const getReservations = async () => {
-    try {
-      const response = await axios.get(`${apiUrl}/getAppointmentsHistory`);
-    //  console.log(response.data);
-      setReservations(response.data);
-      setFilteredReservations(response.data);
-    } catch (error) {
-      console.error('Error fetching reservations:', error);
-      setReservations([]);
-      setFilteredReservations([]);
-    }
-  };
+
 
   const applyFilters = () => {
     let filtered = [...reservations];
@@ -93,6 +104,36 @@ function AdminHistory() {
        default : return '';
     }
   }
+
+  const getDoctorInfo = (appointment)=>{
+
+      return `${appointment.split(':')[0]} : ${appointment.split(':')[1]}`;
+    
+  }
+
+
+
+  if (loading) {
+    return (
+      <div className="admin-history">
+      <div className="history-header">
+        <h1>Chargement de données ...</h1>
+      </div>
+      </div>
+    );
+  }
+
+  if (error) {
+       return (
+        <div className="admin-history">
+        <div className="history-header">
+       <p style={{ color: "red" }}>Aucune donnée disponible en raison d'une erreur de serveur</p>
+      </div>
+      </div>
+       )
+  }
+
+
 
   return (
     <div className="admin-history">
@@ -186,7 +227,7 @@ function AdminHistory() {
                */}
                <div className="detail-item">
                 <span className="label">Doctor:</span>
-                <span className="value">{selectedReservation.nomPrenom}</span>
+                <span className="value">{getDoctorInfo(selectedReservation.medecin_Nom_Speciality)}</span>
               </div>
               <div className="detail-item">
                 <span className="label">Patient Name:</span>

@@ -12,6 +12,7 @@ function Login() {
   const navigate = useNavigate();
   const usernamePhoneRef = useRef(null);
   const passwordRef = useRef(null);
+  const [errors,setErrors] = useState({});
 
   const [formData,setFormData] = useState({
     UsernamePhone: "",
@@ -52,6 +53,8 @@ function Login() {
      inputControl.classList.remove('error');
      inputControl.classList.add('success');
     }
+
+
 
     const sendOtpCode = async(email,username)=>{
       console.log('Email = '+email);
@@ -106,63 +109,86 @@ function Login() {
 
     const handleConfirm = async (e)=>{
           e.preventDefault();
-
+      const validationErrors = {};
   //    console.log(formData);
-     axios.post(`${apiUrl}/logincheck`,formData)
-     .then((response)=>{
-
-    
-     if(response.data.answer==='admin'){
-        sessionStorage.setItem('admin','yesAdmin');
-        navigate('/admin');
-     }
-     else if(response.data.answer===-1){
-        setError(usernamePhoneRef.current,"Wrong username or phone number or password");
-        setError(passwordRef.current,"");
-      }
-      else if(response.data.answer===0){
-        setError(usernamePhoneRef.current,"no account with this credentials");
-        setError(passwordRef.current,"");
-      }
-      else if(response.data.answer==='unverified'){
-        console.log(response.data.answer);
-        console.log(response.data.email);
-        const emailAccount = response.data.email;
-        const username = response.data.username;
-                Swal.fire({
-                  title: 'Account not verified!',
-                  text: 'Your account is not verified , Do you want to get a confirmation code in your Gmail',
-                  icon: 'warning',
-                  showCancelButton: true,
-                  confirmButtonText: 'Send',
-                  customClass: {
-                    popup: 'custom-swal-popup',
-                    title: 'custom-swal-title',
-                    cancelButton: 'custom-swal-cancel-button',
-                    confirmButton: 'custom-swal-confirm-button',
-                  },
-                  buttonsStyling: false, // To enable the custom class styling
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    console.log("Confirmed! Sending OTP...");
-                    sendOtpCode(emailAccount, username); // Ensure the function is properly invoked here
-                  } else {
-                    console.log("Cancelled or dismissed.");
-                  }
-                });
-      }
-      else if(response.data.answer===1) {
-        
-        sessionStorage.setItem('accountId',response.data.account);
-        setSuccess(usernamePhoneRef.current);
-        setSuccess(passwordRef.current);
-        navigate('/shop');
-      }
-
-     })
-     .catch((err)=>{
-      console.log(err);
-     })
+          if(formData.UsernamePhone.trim()==''){
+           validationErrors.username = 'You have to put your username';
+           
+          }
+          if(formData.Password.trim()==''){
+            validationErrors.password = 'please put you password';
+          }
+         setErrors(validationErrors);
+          if(Object.keys(validationErrors).length==0){
+            axios.post(`${apiUrl}/logincheck`,formData)
+            .then((response)=>{
+       
+              if(response.data.answer===1) {
+               sessionStorage.setItem('token',response.data.token);
+               sessionStorage.setItem('accountId',response.data.account);
+               setSuccess(usernamePhoneRef.current);
+               setSuccess(passwordRef.current);
+               if(response.data.account=='normal')
+               navigate('/admin');
+             else 
+             navigate('/adminSuper');
+             }
+       
+            })
+            .catch((err)=>{
+             if(err.response) {
+               console.log(err.response);
+                      if(err.response.data.answer===-1){
+               setError(usernamePhoneRef.current,"Wrong credentials");
+            //   setError(passwordRef.current,"");
+             }
+             else if(err.response.data.answer===0){
+               setError(usernamePhoneRef.current,"no account with this credentials");
+             //  setError(passwordRef.current,"");
+             }
+        {/*
+               else if(response.data.answer==='unverified'){
+               console.log(response.data.answer);
+               console.log(response.data.email);
+               const emailAccount = response.data.email;
+               const username = response.data.username;
+                       Swal.fire({
+                         title: 'Account not verified!',
+                         text: 'Your account is not verified , Do you want to get a confirmation code in your Gmail',
+                         icon: 'warning',
+                         showCancelButton: true,
+                         confirmButtonText: 'Send',
+                         customClass: {
+                           popup: 'custom-swal-popup',
+                           title: 'custom-swal-title',
+                           cancelButton: 'custom-swal-cancel-button',
+                           confirmButton: 'custom-swal-confirm-button',
+                         },
+                         buttonsStyling: false, // To enable the custom class styling
+                       }).then((result) => {
+                         if (result.isConfirmed) {
+                           console.log("Confirmed! Sending OTP...");
+                           sendOtpCode(emailAccount, username); // Ensure the function is properly invoked here
+                         } else {
+                           console.log("Cancelled or dismissed.");
+                         }
+                       });
+             }
+         */}
+       
+             }
+             else {
+              Swal.fire({
+                icon:'error',
+                title:'Oops',
+                html:'<span style="color:red">Network error,Check operation has failed Please try again Later! </span>',
+                showConfirmButton:false,
+                timer:4000,
+              })
+             }
+                  
+            })
+          }
     }
 
 
@@ -178,8 +204,11 @@ function Login() {
           ref={usernamePhoneRef}
           value={formData.UsernamePhone}
           onChange={handleChange}
+          autoComplete='false'
         />
-        <div className="error"></div>
+        <div className="error">
+        {errors.username && <span style={{color:'red',textAlign:'center'}}>{errors.username}</span>}
+        </div>
       </div>
 
       <div className="input-groupLogin">
@@ -207,7 +236,9 @@ function Login() {
             {showPassword ? "🙈" : "👁️"}
           </span>
         </div>
-        <div className="error"></div>
+        <div className="error">
+        {errors.password && <span style={{color:'red'}}>{errors.password}</span>}
+        </div>
       </div>
 
       <div className="btnsFather">

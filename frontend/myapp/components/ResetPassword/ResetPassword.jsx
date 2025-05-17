@@ -26,23 +26,6 @@ function ResetPassword() {
       setConfirmShowPassword((prevState) => !prevState);
     };
   
-  
-  
-
-  /*
-  const [showPassword, setShowPassword] = useState({
-    newPassword: false,
-    confirmPassword: false,
-  });
-
-  const togglePasswordVisibility = (field) => {
-    setShowPassword((prev) => ({
-      ...prev,
-      [field]: !prev[field],
-    }));
-  };
-*/
-
   const setError=(element,message)=>{
     const inputControl = element.parentElement;
     const errorDisplay = inputControl.querySelector('.error');
@@ -62,14 +45,26 @@ function ResetPassword() {
      inputControl.classList.add('success');
     }
 
-    const isValidPassword = (test)=>{
-      if(test.length<6)
-        return -1;
+    const isValidPassword = (test) => {
+      // Check if the password length is at least 8 characters
+      if (test.length < 8) {
+        return false; // Password is too short
+      }
+    
+      // Check if password contains at least one uppercase letter, one lowercase letter, and one number
+      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/;
+    
+      if (!regex.test(test)) {
+        return false; // Password doesn't meet the required conditions
+      }
+    
+      return true; // Password is valid
     }
+    
 
     const handleSubmit = async (e) =>{
      e.preventDefault();
-     if(isValidPassword(password)!=-1 ){
+     if(isValidPassword(password)){
       console.log('email = '+email);
       console.log('token = '+token);
          setSuccess(passwordRef.current);
@@ -122,7 +117,7 @@ function ResetPassword() {
                                                                          background: 'white', // Light green background for success
                                                                        })
                                                                        .then(()=>{
-                                                                         navigate('/');
+                                                                         navigate('/login');
                                                                        })
                                              }
                                  
@@ -156,16 +151,17 @@ function ResetPassword() {
            }
      }
      else {
-      setError(passwordRef.current,("password should contain at least 6 characters"));
+      setError(passwordRef.current,("Password must be at least 8 characters long ,include uppercase,lowercase, and a number"));
      }
     }
 
   return (
     <div className='FatherLogin'>
            <form onSubmit={handleSubmit}>
-        <div className="input-group">
-          <label htmlFor="">Set New Password</label>
-        <input 
+        <div className="input-group" >
+          <label htmlFor="" style={{color:'#2196f3'}}>Set New Password</label>
+        <input
+        style={{borderColor:'#2196f3'}} 
         type={showPassword ? "text" : "password"} placeholder='New password'
         ref={passwordRef}
         value={password} 
@@ -189,8 +185,9 @@ function ResetPassword() {
         </div>
 
         <div className="input-group">
-  <label htmlFor="confirmPassword">Confirm Password</label>
+  <label htmlFor="confirmPassword" style={{color:'#2196f3'}}>Confirm Password</label>
   <input
+    style={{borderColor:'#2196f3'}}
     type={showConfrimPassword ? "text" : "password"} 
     placeholder="Confirm password"
     value={confirmPass}
@@ -215,7 +212,7 @@ function ResetPassword() {
 
 
         <div className="input-group">
-      <button className='confirmButton' onClick={handleSubmit}>Confrim</button>
+      <button className='forgetPasswordBtn' onClick={handleSubmit}>Confrim</button>
      </div>
 
         </form>
