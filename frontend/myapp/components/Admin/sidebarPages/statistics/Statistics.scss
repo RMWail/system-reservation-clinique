@@ -1,0 +1,118 @@
+.statistics {
+  padding: 2rem;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+
+  h1 {
+    color: #2c3e50;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .stat-card {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+
+    h3 {
+      color: #4a5568;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    &.total-appointments {
+      border-top: 4px solid #2c7be5;
+      .stat-number { color: #2c7be5; }
+    }
+
+    &.confirmed {
+      border-top: 4px solid #2ecc71;
+      .stat-number { color: #2ecc71; }
+    }
+
+    &.pending {
+      border-top: 4px solid #f1c40f;
+      .stat-number { color: #f1c40f; }
+    }
+
+    &.cancelled {
+      border-top: 4px solid #e74c3c;
+      .stat-number { color: #e74c3c; }
+    }
+
+    &.doctors {
+      border-top: 4px solid #9b59b6;
+      .stat-number { color: #9b59b6; }
+    }
+
+    &.patients {
+      border-top: 4px solid #3498db;
+      .stat-number { color: #3498db; }
+    }
+
+    &.daily-average {
+      border-top: 4px solid #1abc9c;
+      .stat-number { color: #1abc9c; }
+    }
+  }
+
+  .chart-section {
+    height: 400px;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    h2 {
+      color: #2c3e50;
+      margin-bottom: 2rem;
+      font-size: 1.4rem;
+    }
+
+
+    
+  }
+}
+
+@media (max-width: 768px) {
+  .statistics {
+    padding: 1rem;
+
+    .stats-grid,
+    .stats-row {
+      grid-template-columns: 1fr;
+    }
+
+    .chart-section {
+      overflow-x: auto;
+
+      .bar-chart {
+        min-width: 600px;
+        margin-left: 0%;
+      }
+    }
+  }
+
+}
