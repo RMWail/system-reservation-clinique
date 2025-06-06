@@ -91,7 +91,13 @@ export const translations = {
       confirmText: 'Do you want to confirm reservation',
       cancel: 'Cancel',
       confirm: 'Confirm'
-    }
+    },
+
+    errors: {
+      loadingData:'Chargement de données ...',
+      error:"Aucune donnée disponible en raison d'une erreur de serveur ou de connection", 
+    },
+
   },
   fr: {
     backgroundSlides: {
@@ -185,7 +191,11 @@ export const translations = {
       confirmText: 'Voulez-vous confirmer la réservation',
       cancel: 'Annuler',
       confirm: 'Confirmer'
-    }
+    },
+    errors: {
+      loadingData:'Chargement de données ...',
+      error:"Aucune donnée disponible en raison d'une erreur de serveur ou de connection", 
+    },
   },
   ar: {
     backgroundSlides: {
@@ -279,6 +289,10 @@ export const translations = {
       confirmText: 'هل تريد تأكيد الحجز',
       cancel: 'إلغاء',
       confirm: 'تأكيد'
-    }
+    },
+    errors: {
+      loadingData:'تحميل البيانات...',
+      error:'خطأ لا يمكن تحميل البيانات بسبب خطأ في السيرفر او خطأ في الاتصال',
+     },
   }
 };

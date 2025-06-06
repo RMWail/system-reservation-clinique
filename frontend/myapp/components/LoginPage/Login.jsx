@@ -1,13 +1,13 @@
 import React from 'react'
-import { useRef, useState } from 'react'
+import { useRef, useState, createContext } from 'react'
 import axios from 'axios';
 import './Login.scss'
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-
-
+const LanguageContext = createContext();
 function Login() {
-
+  
+  const [currentLanguage, setCurrentLanguage] = useState('ar');
   const apiUrl = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
   const usernamePhoneRef = useRef(null);
@@ -20,6 +20,12 @@ function Login() {
   })
 
   const [showPassword, setShowPassword] = useState(false);
+
+    React.useEffect(() => {
+    //  document.documentElement.dir = currentLanguage === 'ar' ? 'ltr' : 'ltr';
+      document.documentElement.dir = 'ltr';
+      document.documentElement.lang = currentLanguage;
+    }, [currentLanguage]);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
@@ -129,7 +135,7 @@ function Login() {
                setSuccess(usernamePhoneRef.current);
                setSuccess(passwordRef.current);
                if(response.data.account=='normal')
-               navigate('/admin');
+               navigate('/admin/appointments');
              else 
              navigate('/adminSuper');
              }
@@ -194,7 +200,7 @@ function Login() {
 
 
  return (
-  <div className="FatherLogin">
+  <div className="FatherLogin" dir='ltr'>
   <form onSubmit={handleConfirm}>
     <div className="input-groupLogin">
       <label htmlFor="Username">Admin username </label>

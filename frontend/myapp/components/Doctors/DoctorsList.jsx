@@ -12,8 +12,10 @@ function DoctorsList() {
   const { currentLanguage, toggleLanguage } = useLanguage();
   const t = translations[currentLanguage];
   const [selectedDoctor, setSelectedDoctor] = useState(null);
-  const days = ['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const days = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
   const {loading,error,doctors} = useAppointmentBooking();
+
+  // ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت']
 
 
   const handleDoctorClick = (doctor) => {
@@ -37,14 +39,16 @@ function DoctorsList() {
 
   return (
         doctors ? (
-          <div className="doctors-list-container">
+          <div className="doctors-list-container" dir='rtl'>
           <div className="doctors-header">
             <h1>{t.doctors.title}</h1>
             <p>{t.doctors.subtitle}</p>
-            <button className="language-toggle" onClick={toggleLanguage}>
+                 {/*
+                             <button className="language-toggle" onClick={toggleLanguage}>
               <FaGlobe className="icon" />
               {currentLanguage.toUpperCase()}
             </button>
+                 */}
           </div>
     
           <div className="doctors-grid">
@@ -87,7 +91,7 @@ function DoctorsList() {
     
                   <div className="doctor-availability">
                   <div className="availability">
-                    <h3>Available on:</h3>
+                    <h3>متوفر في</h3>
                     <ul>
                       {doctor.medecin_availability.split('').map((key,index) => (
                         

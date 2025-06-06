@@ -5,6 +5,8 @@ import { getStatusClass,getGenderClass,getDoctorInfo } from '../../../../utils/a
 import { useAppointementHistory } from '../../../../hooks/admin-hooks/useAppointementsHistory';
 import { io } from 'socket.io-client';
 import { useQueryClient } from '@tanstack/react-query';
+import LoadingData from '../../../loadingData/LoadingData';
+import LoadingError from '../../../loadingError/LoadingError';
 
 function AdminHistory() {
   const queryClient = useQueryClient();
@@ -100,43 +102,34 @@ useEffect(()=>{
 
 
 
-
-  if (loading) {
+  if(loading) {
     return (
-      <div className="admin-history">
-      <div className="history-header">
-        <h1>Chargement de données ...</h1>
-      </div>
-      </div>
+      <LoadingData />
     );
   }
 
-  if (error) {
-       return (
-        <div className="admin-history">
-        <div className="history-header">
-       <p style={{ color: "red" }}>Aucune donnée disponible en raison d'une erreur de serveur</p>
-      </div>
-      </div>
-       )
+  if(error) {
+    return (
+      <LoadingError />
+    );
   }
 
 
 
   return (
-    <div className="admin-history">
+    <div className="admin-history" dir='ltr'>
       <div className="history-header">
-        <h2>Reservation History</h2>
+        <h2>Historique des redez-vous</h2>
         <div className="filters-container">
           <select 
             value={statusFilter} 
             onChange={(e) => setStatusFilter(e.target.value)}
             className="status-filter"
           >
-            <option value="all">All Status</option>
-            <option value="confirmed">Confirmed</option>
-            <option value="pending">Pending</option>
-            <option value="cancelled">Cancelled</option>
+            <option value="all">Tous les statuts</option>
+            <option value="confirmed">Confirmé</option>
+            <option value="pending">En attente</option>
+            <option value="cancelled">Annulé</option>
           </select>
 
           <input
@@ -148,7 +141,7 @@ useEffect(()=>{
 
           <input
             type="text"
-            placeholder="Search by ID, Name, or Phone..."
+            placeholder="Rechercher par identifiant, téléphone ou nom..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="search-input"
@@ -161,11 +154,11 @@ useEffect(()=>{
           <thead>
             <tr>
               <th>Reservation N°</th>
-              <th>Patient Name</th>
-              <th>Phone</th>
-              <th>Reservation Date</th>
-              <th>Management Date</th>
-              <th>Status</th>
+              <th>Nom du patient</th>
+              <th>Téléphone</th>
+              <th>Date de rendez-vous</th>
+              <th>Date de gestion</th>
+              <th>Statut</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -184,7 +177,7 @@ useEffect(()=>{
                 </td>
                 <td>
                   <span className={`status-badge ${getStatusClass(reservation.reservation_Etat)}`}>
-                    {reservation.reservation_Etat === 1 ? 'Confirmed' : reservation.reservation_Etat === 0 ? 'Pending' : 'Cancelled'}
+                    {reservation.reservation_Etat === 1 ? 'confirmé' : reservation.reservation_Etat === 0 ? 'en attente' : 'annulé'}
                   </span>
                 </td>
                 <td>
@@ -192,7 +185,7 @@ useEffect(()=>{
                     className="view-details-btn"
                     onClick={() => handleViewDetails(reservation)}
                   >
-                    View Details
+                    Voire Détails
                   </button>
                 </td>
               </tr>
@@ -205,7 +198,7 @@ useEffect(()=>{
         <div className="details-modal">
           <div className="details-content">
             <button className="close-btn" onClick={closeDetails}>&times;</button>
-            <h3>Reservation Details</h3>
+            <h3>Détails de Rendez-vous</h3>
             <div className="details-grid">
          {/* 
                         {
@@ -216,36 +209,36 @@ useEffect(()=>{
                }
          */}
                <div className="detail-item">
-                <span className="label">Doctor:</span>
+                <span className="label">Médecin:</span>
                 <span className="value">{getDoctorInfo(selectedReservation.medecinInfo)}</span>
               </div>
               <div className="detail-item">
-                <span className="label">Patient Name:</span>
+                <span className="label">Nom et Prénom du patient:</span>
                 <span className="value">{selectedReservation.NomPrenom}</span>
               </div>
               <div className="detail-item">
-                <span className="label">Patient Age:</span>
+                <span className="label">L'age de patient:</span>
                 <span className="value">{selectedReservation.Age}</span>
               </div>
               <div className="detail-item">
-                <span className="label">Gender:</span>
+                <span className="label">Genre:</span>
                 <span className={`status-badge ${getGenderClass(selectedReservation.Genre)}`}>
-  {selectedReservation.Genre === 0 ? 'Male' : 'Female'}
+  {selectedReservation.Genre === 0 ? 'Mâle' : 'Femelle'}
 </span>
 
               </div>
               <div className="detail-item">
-                <span className="label">Phone:</span>
+                <span className="label">Téléphone:</span>
                 <span className="value">{selectedReservation.Telephone}</span>
               </div>
               <div className="detail-item">
-                <span className="label">Reservation Date:</span>
+                <span className="label">Date de rendez-vous:</span>
                 <span className="value">
                   {(selectedReservation.reservation_Date)}
                 </span>
               </div>
               <div className="detail-item">
-                <span className="label">Management Date:</span>
+                <span className="label">Date de gestion:</span>
                 <span className="value">
                   {selectedReservation.reservation_FinDate ? 
                   selectedReservation.reservation_FinDate: 
@@ -254,9 +247,9 @@ useEffect(()=>{
                 </span>
               </div>
               <div className="detail-item">
-                <span className="label">Status:</span>
+                <span className="label">Statut:</span>
                 <span className={`${getStatusClass(selectedReservation.reservation_Etat)}`}>
-                  {selectedReservation.reservation_Etat === 1 ? 'Confirmed' : selectedReservation.reservation_Etat=== 0 ? 'Pending' : 'Cancelled'}
+                  {selectedReservation.reservation_Etat === 1 ? 'Confirmé' : selectedReservation.reservation_Etat=== 0 ? 'En attente' : 'Annulé'}
                 </span>
               </div>
             </div>

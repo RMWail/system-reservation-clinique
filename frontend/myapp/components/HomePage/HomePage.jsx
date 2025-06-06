@@ -58,10 +58,12 @@ const HomePage = () => {
           <a href="#services">{t.nav.services}</a>
           <a href="#contact">{t.nav.contact}</a>
           <Link to="/doctors" className="book-btn">{t.nav.book}</Link>
-          <button className="language-toggle" onClick={toggleLanguage}>
+             {/*
+                       <button className="language-toggle" onClick={toggleLanguage}>
             <FaGlobe className="icon" />
             {currentLanguage.toUpperCase()}
           </button>
+             */}
         </div>
       </nav>
 

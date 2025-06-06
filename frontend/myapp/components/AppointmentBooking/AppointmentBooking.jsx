@@ -5,7 +5,6 @@ import swal from 'sweetalert2';
 import jsPDF from 'jspdf';
 import { useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../translations/translations';
-import { FaGlobe } from 'react-icons/fa';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import addAmiriFont  from './myFont';
@@ -83,33 +82,33 @@ function AppointmentBooking() {
     const validationErrors = {};
 
     if(!formData.name.trim()){
-      validationErrors.name = "Please enter your name !"
+      validationErrors.name = "الرجاء وضع الاسم الكامل باللغة العربية أو اللاتينية!"
     }
  
     if(!isValidString(formData.name)){
-      validationErrors.name = 'Please put a valid full name in latin or arabic !';
+      validationErrors.name = 'الرجاء وضع الاسم الكامل باللغة العربية أو اللاتينية!';
     }
     if(!isValidTelephone(formData.phone)){
-      validationErrors.phone = 'Please put a valid telephone!';
+      validationErrors.phone = 'الرجاء وضع رقم هاتف صالح!';
     }
 
     if(formData.doctorId ===''){
-      validationErrors.doctor = 'Please choose a doctor for the appointement!';
+      validationErrors.doctor = 'الرجاء اختيار الطبيب للموعد!';
     }
     if(formData.doctorInfo ==''){
-      validationErrors.doctor = 'Please choose a doctor for the appintement!';
+      validationErrors.doctor = 'الرجاء اختيار الطبيب للموعد!';
     }
 
     if(formData.gender === ''){
-      validationErrors.gender = 'Please choose your gender!';
+      validationErrors.gender = 'الرجاء اختيار الجنس!';
     }
 
     if(formData.age < 0 || formData.age =='' || formData.age > 200) {
-      validationErrors.age = 'Please put a valid age!';
+      validationErrors.age = 'من فضلك ضع عمر!';
     }
 
     if(formData.date == null ) {
-       validationErrors.date = 'Please choose a date for the appointement!';
+       validationErrors.date = 'الرجاء اختيار تاريخ للموعد!';
     }
 
  
@@ -119,12 +118,12 @@ function AppointmentBooking() {
     
 
    if(doctor.medecin_availability[indexDay]!=='1'){
-    validationErrors.date = 'The doctor is not available on this day,please choose another date!';
+    validationErrors.date = 'الطبيب غير متاح في هذا اليوم، يرجى اختيار تاريخ آخر!';
     swal.fire({
       icon:'warning',
       iconColor:'orange',
-      title:'Doctor unavailable',
-      text:`Doctor ${doctor.nomPrenom} does not work on this day!`,
+      title:'الطبيب غير متاح',
+      text:`الطبيب ${doctor.nomPrenom} غير متاح في هذا اليوم!`,
       showConfirmButton:false,
       timer:3500,
     })
@@ -256,18 +255,20 @@ function AppointmentBooking() {
   }
 
   return (
-    <div className="appointment-booking">
+    <div className="appointment-booking" dir='rtl'>
       <div className="booking-container">
         <div className="header-with-language">
-          <h1>{t.appointment.title}</h1>
-          <button className="language-toggle" onClick={toggleLanguage}>
+          <h1>حجز موعد</h1>
+          {/*
+                    <button className="language-toggle" onClick={toggleLanguage}>
             <FaGlobe className="icon" />
             {currentLanguage.toUpperCase()}
           </button>
+          */}
         </div>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="name">{t.appointment.fullName}</label>
+            <label htmlFor="name">الاسم الكامل</label>
             <input
               type="text"
               id="name"
@@ -280,7 +281,7 @@ function AppointmentBooking() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="phone">{t.appointment.phoneNumber}</label>
+            <label htmlFor="phone">رقم الهاتف</label>
             <input
               type="tel"
               placeholder='05 - 06 - 07'
@@ -294,7 +295,7 @@ function AppointmentBooking() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="doctorId">{t.appointment.selectDoctor}</label>
+            <label htmlFor="doctorId">اختر الطبيب</label>
             <select
               id="doctorId"
               name="doctorId"
@@ -302,7 +303,7 @@ function AppointmentBooking() {
               onChange={handleInputChange}
               
             >
-              <option value="">Select a doctor</option>
+              <option value="">اختر الطبيب</option>
               <option></option>
               {doctors.map(doctor => (
                 <option key={doctor.medecin_Id} value={doctor.medecin_Id}>
@@ -313,7 +314,7 @@ function AppointmentBooking() {
             {errors.doctor && <span style={{color:'red'}}>{errors.doctor}</span>}
           </div>
           <div className="form-group">
-            <label htmlFor="gender">{t.appointment.gender}</label>
+            <label htmlFor="gender">الجنس</label>
             <select
               id="gender"
               name="gender"
@@ -321,15 +322,15 @@ function AppointmentBooking() {
               onChange={handleInputChange}
               
             >
-              <option value="">{t.appointment.selectGender}</option>
-              <option value="male">{t.appointment.male}</option>
-              <option value="female">{t.appointment.female}</option>
+              <option value="">اختر الجنس</option>
+              <option value="male">ذكر</option>
+              <option value="female">أنثى</option>
             </select>
             {errors.gender && <span style={{color:'red'}}>{errors.gender}</span>}
           </div>
 
           <div className="form-group">
-            <label htmlFor="age">{t.appointment.age}</label>
+            <label htmlFor="age">العمر</label>
             <input
 
               id="age"
@@ -342,7 +343,7 @@ function AppointmentBooking() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="date">{t.appointment.date}</label>
+            <label htmlFor="date">التاريخ المفضل</label>
 
        <DatePicker
               defaultValue={null}
@@ -359,7 +360,7 @@ function AppointmentBooking() {
           </div>
           {errors.date && <span style={{color:'red'}}>{errors.date}</span>}
           <button type="submit" className="submit-btn">
-            {t.appointment.bookAppointment}
+          حجز موعد
           </button>
         </form>
       </div>

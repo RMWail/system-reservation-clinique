@@ -2,7 +2,7 @@
   padding: 40px;
   width: 100%;
   min-height: 100vh;
- // background-color: red;
+  background-color: white;
 
   .createDiv {
     width: 350px;
@@ -45,7 +45,8 @@
     border-radius: 15px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     width: 90%;
-    max-width: 500px;
+    height: 57%;
+    max-width: 600px;
    // opacity: 0;
    // visibility: hidden;
     transition: all 0.3s ease;

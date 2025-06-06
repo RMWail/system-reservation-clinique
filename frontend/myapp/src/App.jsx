@@ -32,6 +32,21 @@ function App() {
     })
   }, []);
 
+  useEffect(()=>{
+    const handleUnload = ()=>{
+      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('accountId');
+      sessionStorage.removeItem('activeMenu');
+    }
+
+    window.addEventListener('unload',handleUnload);
+
+    return () =>{
+      window.removeEventListener('unload',handleUnload);
+    }
+
+  })
+
   return (
     <LanguageProvider>
       <Router>
@@ -48,11 +63,14 @@ function App() {
           
           {/* Admin routes */}
           <Route element={<BaseLayout/>}>
-            <Route path='/admin' element={<Statistics/>} />
+
             {/* <Route path='/admins/doctors' element={<DoctorsManagement/>} /> */}
             <Route path='/admin/create-reservation' element={<CreateReservation/>} />
             <Route path='/admin/appointments' element={<Appointments/>} />
-            {/* <Route path='/admin/statistics' element={<Statistics/>} /> */}
+
+
+            <Route path='/admin/statistics' element={<Statistics/>} /> 
+            
             <Route path='/admin/history' element={<AdminHistory/>} />
            {/*  <Route path='/admin/settings' element={<Settings/>} /> */}
           </Route>

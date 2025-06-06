@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef } from 'react';
+import React, { useEffect, useState,useRef,createContext } from 'react';
 import './Appointments.scss';
 import swal from 'sweetalert2';
 import { io } from 'socket.io-client';
@@ -6,8 +6,13 @@ import { toast } from 'sonner';
 import { useQueryClient } from '@tanstack/react-query';
 import { useAppointments } from '../../../../hooks/admin-hooks/useAppointements';
 import { getStatusColor,getGenderColor,getDoctorInfo } from '../../../../utils/appointmentsUtils';
+import LoadingData from '../../../loadingData/LoadingData';
+import LoadingError from '../../../loadingError/LoadingError';
+
+const LanguageContext = createContext();
 
 function Appointments() {
+  const [currentLanguage, setCurrentLanguage] = useState('fr');
   const queryClient = useQueryClient();
   const socketRef = useRef('');
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -20,7 +25,6 @@ function Appointments() {
 
 
   useEffect(()=>{
-  //  getAppointments(); 
     
     socketRef.current = io(`${apiUrl}`,{
       auth:{secret:'this is from Appointments component'},
@@ -30,7 +34,7 @@ function Appointments() {
     socketRef.current.on('newReservationAdded',newAppointment=>{
      
    
-      toast.info(`New reservation was made by ${newAppointment.patient_NomPrenom}`,{
+      toast.info(`Nouvelle réservation par ${newAppointment.patient_NomPrenom}`,{
         position:'bottom-left',
         duration:5000,
         className: "toastClass",
@@ -65,11 +69,11 @@ function Appointments() {
   const handleAppointementAction = (appointmentId, status) => {
     swal.fire({
       title: 'Confirmation',
-      text: 'Are you sure to confirm the appointment?',
+      text: 'Êtes-vous sûr de confirmer le rendez-vous ?',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'No',
+      confirmButtonText: 'Oui',
+      cancelButtonText: 'Non',
       confirmButtonColor: '#2196f3',
       customClass: { title: 'alertOrderTitle' },
     }).then(async(res) => {
@@ -80,16 +84,17 @@ function Appointments() {
 
         //  console.log(updateAppointementResponse.data.result);
           const newStatus = updateAppointementResponse.data.newStatus; // Get the new status from the backend
-          const swalMsg = newStatus === 1 ? 'confirmed' : 'cancelled';
-          const iconColor = newStatus === 1 ? '#2196f3' : '#f44336';
+          const swalMsg = newStatus === 1 ? 'confirmé' : 'annulé';
+          const iconColor = newStatus === 1 ? '#23b846' : '#f44336';
 
           setSelectedAppointment(null);
           swal.fire({
-            title: 'Updated!',
-            html: `This appointment was set as  <span style="color:${iconColor}">${swalMsg}</span> `,
+            title: 'Mis à jour!',
+            html: `Cette rendez-vous a été fixée comme  <span style="color:${iconColor}">${swalMsg}</span> `,
             icon: 'success',
+            iconColor:iconColor,
             showConfirmButton: false,
-            timer: 3000,
+            timer: 3500,
             customClass: { confirmButton: 'alertOrderConfirmButton2' },
           });
 
@@ -110,23 +115,28 @@ function Appointments() {
   };
 
 
-  if(loading) {
-    return ;
-  }
 
-  if(error) {
-    return ;
-  }
+  if(loading) {
+    return (
+     <LoadingData />
+    );
+   }
+ 
+   if(error) {
+     return (
+       <LoadingError />
+     );
+   }
 
   return (
-    <div className="admin-appointments">
+    <div className="admin-appointments" dir='ltr'>
       <div className="appointments-header">
-        <h1>Appointments Management</h1>
+        <h1>Gestion des rendez-vous</h1>
         <div className="filters">
           <div className="search-container">
             <input 
               type="text" 
-              placeholder="Search by ID, Phone, or Name..."
+              placeholder="Rechercher par identifiant, téléphone ou nom..."
               className="search-input"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -143,10 +153,10 @@ function Appointments() {
             className="status-filter"
             onChange={(e) => setSelectFiler(e.target.value)}
           >
-            <option value="">All Status</option>
-            <option value="1">confirmed</option>
-            <option value="0">pending</option>
-            <option value="-1">cancelled</option>
+            <option value="">Tous les statuts</option>
+            <option value="1">confirmé</option>
+            <option value="0">en attente</option>
+            <option value="-1">annulé</option>
           </select>
         </div>
       </div>
@@ -158,16 +168,16 @@ function Appointments() {
             <thead>
               <tr>
                 <th>N°</th>
-                <th>Telephone</th>
-                <th>Patient Name</th>
-                <th>gender</th>
-                <th>Doctor</th>
+                <th>Téléphone</th>
+                <th>Nom du patient</th>
+                <th>Genre</th>
+                <th>Médecin</th>
                 <th>Date</th>
-                <th>Status</th>
+                <th>Statut</th>
                 <th>Actions</th>
               </tr>
             </thead>
-            {appointments && appointments.length > 0 ? (
+            {appointments.length > 0 ? (
               <tbody>
                 {Array.isArray(appointments) && appointments
                   .filter((appointment) => 
@@ -193,7 +203,7 @@ function Appointments() {
                       <td>{appointment.reservation_Date}</td>
                       <td>
                         <span className={`status-badge ${getStatusColor(appointment.reservation_Etat === 0 ? 'pending' : appointment.reservation_Etat === 1 ? 'confirmed' : 'cancelled')}`}>
-                          {appointment.reservation_Etat === 0 ? 'pending' : appointment.reservation_Etat === 1 ? 'confirmed' : 'cancelled'}
+                          {appointment.reservation_Etat === 0 ? 'en attente' : appointment.reservation_Etat === 1 ? 'confirmé' : 'annulé'}
                         </span>
                       </td>
                       <td>
@@ -201,7 +211,7 @@ function Appointments() {
                           className="view-actions-btn"
                           onClick={() => handleViewActions(appointment)}
                         >
-                          View Actions
+                          afficher les actions
                         </button>
                       </td>
                     </tr>
@@ -211,7 +221,7 @@ function Appointments() {
               <tbody>
                 <tr>
                   <td colSpan="8" className="no-appointments" style={{color:'#2196F3'}}>
-                   <h2> No reservations yet</h2>
+                   <h2>Pas encore de rendez-vous</h2>
                   </td>
                 </tr>
               </tbody>
@@ -222,31 +232,31 @@ function Appointments() {
         {selectedAppointment && (
           <div className="appointment-actions-card">
             <div className="card-header">
-              <h2>Appointment Actions</h2>
+              <h2>Action de rendez-vous</h2>
               <button className="closeBtn" onClick={() =>setSelectedAppointment(null)}>×</button>
             </div>
             <div className="card-content">
               <div className="patient-info">
                 <div className="info-section">
-                  <h3>Patient Details</h3>
+                  <h3>Détails du patient</h3>
                   <div className="info-group">
-                    <span className="label">Name</span>
+                    <span className="label">Nom et prénom</span>
                     <span className="value">{selectedAppointment.patient_NomPrenom}</span>
                   </div>
                   <div className="info-group">
                     <span className="label">Age</span>
-                    <span className="value">{selectedAppointment.patient_Age} years</span>
+                    <span className="value">{selectedAppointment.patient_Age} ans</span>
                   </div>
                   <div className="info-group">
-                    <span className="label">Phone</span>
+                    <span className="label">Téléphone</span>
                     <span className="value">{selectedAppointment.patient_Telephone}</span>
                   </div>
                 </div>
                 
                 <div className="info-section">
-                  <h3>Appointment Details</h3>
+                  <h3>Rendez-vous Détails</h3>
                   <div className="info-group">
-                    <span className="label">Doctor</span>
+                    <span className="label">Médecin</span>
                     <span className="value">{getDoctorInfo(selectedAppointment.medecin_Nom_Speciality,1)}</span>
                   </div>
                   <div className="info-group">
@@ -254,7 +264,7 @@ function Appointments() {
                     <span className="value">{selectedAppointment.reservation_Date}</span>
                   </div>
                   <div className="info-group">
-                    <span className="label">Current Status</span>
+                    <span className="label">Statut actuel</span>
                     <span className={`status-badge ${getStatusColor(selectedAppointment.reservation_Etat===0 ? 'pending' : selectedAppointment.reservation_Etat===1 ? 'confirmed' : 'cancelled')}`}>
                       {selectedAppointment.reservation_Etat===0 ? 'pending' : selectedAppointment.reservation_Etat===1 ? 'confirmed' : 'cancelled'}
                     </span>
@@ -267,14 +277,14 @@ function Appointments() {
                   onClick={() => handleAppointementAction(selectedAppointment.reservation_Id, 'confirmed')}
                   disabled={selectedAppointment.reservation_Etat === 1}
                 >
-                  Confirm Appointment
+                  Confirmer le rendez-vous
                 </button>
                 <button 
                   className="action-btn cancel"
                   onClick={() => handleAppointementAction(selectedAppointment.reservation_Id, 'cancelled')}
                   disabled={selectedAppointment.reservation_Etat === -1}
                 >
-                  Cancel Appointment
+                  Annulé le rendez-vous
                 </button>
               </div>
             </div>

@@ -3,16 +3,16 @@ import { useState } from 'react';
 import './Sidebar.scss';
 import { Link } from 'react-router-dom';
 import { 
-  MdOutlineHome,
   MdOutlineLogout,
   MdOutlineHistory,
-  MdCalendarToday,
+  MdBarChart,
+  MdHome,
 } from 'react-icons/md';
 import { FaUserMd, FaCalendarPlus } from 'react-icons/fa';
 
 function Sidebar() {
   const [activeMenuItem, setActiveMenuItem] = useState(
-    sessionStorage.getItem('activeMenu') === null ? 'home' : sessionStorage.getItem('activeMenu')
+    sessionStorage.getItem('activeMenu') === null ? 'Rendez-vous' : sessionStorage.getItem('activeMenu')
   );
 
   const handleMenuItemActive = (menuItem) => {
@@ -21,28 +21,30 @@ function Sidebar() {
   };
 
   return (
-    <nav className="sidebar sidebar-show">
+    <nav className="sidebar sidebar-show" dir='ltr'>
       <div className="sidebar-top">
         <div className="sidebar-brand">
           <FaUserMd size={30} color="#2196f3" />
-          <span className="sidebar-brand-text">Errazi Admin</span>
+          <span className="sidebar-brand-text">Admin</span>
         </div>
       </div>
       <div className="sidebar-body">
         <div className="sidebar-menu">
           <ul className="menu-list">
-            <li className="menu-item">
+
+          <li className="menu-item">
               <Link
-                to="/admin"
-                className={`menu-link ${activeMenuItem === "home" ? "active" : ""}`}
-                onClick={() => handleMenuItemActive("home")}
+                to="/admin/appointments"
+                className={`menu-link ${activeMenuItem === "Rendez-vous" ? "active" : ""}`}
+                onClick={() => handleMenuItemActive("Rendez-vous")}
               >
                 <span className="menu-link-icon">
-                  <MdOutlineHome size={28} />
+                  <MdHome size={22} />
                 </span>
-                <span className="menu-link-text">Dashboard</span>
+                <span className="menu-link-text">Rendez-vous</span>
               </Link>
             </li>
+
         {/*
         
             <li className="menu-item">
@@ -62,26 +64,28 @@ function Sidebar() {
             <li className="menu-item">
               <Link
                 to="/admin/create-reservation"
-                className={`menu-link ${activeMenuItem === "create-reservation" ? "active" : ""}`}
-                onClick={() => handleMenuItemActive("create-reservation")}
+                className={`menu-link ${activeMenuItem === "Nouveau rendez-vous" ? "active" : ""}`}
+                onClick={() => handleMenuItemActive("Nouveau rendez-vous")}
               >
                 <span className="menu-link-icon">
                   <FaCalendarPlus size={20} />
                 </span>
-                <span className="menu-link-text">New Reservation</span>
+                <span className="menu-link-text">Nouveau rendez-vous</span>
               </Link>
             </li>
 
+
+
             <li className="menu-item">
               <Link
-                to="/admin/appointments"
-                className={`menu-link ${activeMenuItem === "appointments" ? "active" : ""}`}
-                onClick={() => handleMenuItemActive("appointments")}
+                to="/admin/statistics"
+                className={`menu-link ${activeMenuItem === "statistiques" ? "active" : ""}`}
+                onClick={() => handleMenuItemActive("statistiques")}
               >
                 <span className="menu-link-icon">
-                  <MdCalendarToday size={22} />
+                  <MdBarChart size={28} />
                 </span>
-                <span className="menu-link-text">Appointments</span>
+                <span className="menu-link-text">statistiques</span>
               </Link>
             </li>
 
@@ -122,21 +126,21 @@ function Sidebar() {
             <li className="menu-item">
               <Link
                 to="/admin/history"
-                className={`menu-link ${activeMenuItem === "history" ? "active" : ""}`}
-                onClick={() => handleMenuItemActive("history")}
+                className={`menu-link ${activeMenuItem === "Historique" ? "active" : ""}`}
+                onClick={() => handleMenuItemActive("Historique")}
               >
                 <span className="menu-link-icon">
                   <MdOutlineHistory size={22} />
                 </span>
-                <span className="menu-link-text">History</span>
+                <span className="menu-link-text">Historique</span>
               </Link>
             </li>
 
             <li className="menu-item">
               <Link
                 to="/"
-                className={`menu-link ${activeMenuItem === "logout" ? "active" : ""}`}
-                onClick={() => {handleMenuItemActive("logout");
+                className={`menu-link ${activeMenuItem === "Déconnexion" ? "active" : ""}`}
+                onClick={() => {handleMenuItemActive("Déconnexion");
                   sessionStorage.removeItem('token');
                   sessionStorage.removeItem('accountId');
                   sessionStorage.removeItem('activeMenu');
@@ -145,7 +149,7 @@ function Sidebar() {
                 <span className="menu-link-icon">
                   <MdOutlineLogout size={22} />
                 </span>
-                <span className="menu-link-text">Logout</span>
+                <span className="menu-link-text">Déconnexion</span>
               </Link>
             </li>
           </ul>

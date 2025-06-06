@@ -71,7 +71,7 @@ const actionDate = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padSt
       return err;
     }
     else {
-      console.log(`appointement state was updated with success to ${status}`);
+      console.log(`appointement state was updated with success to ${req.body.status}`);
       res.json({result:result,appoitementId:appoitementId,newStatus:status})
     }
   })
@@ -80,14 +80,19 @@ const actionDate = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padSt
 
 
 adminRouter.get('/reservationsStats', (req, res) => {
-  let sqlStats = 'CALL GetReservationsStats()';
+  let sqlStats = 'CALL GetReservationsStats(?)';
 
-  database.query(sqlStats, (err, stats) => {
+  const now = new Date(Date.now());
+  const todayDate = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}`;
+
+  database.query(sqlStats,[todayDate],(err, stats) => {
     if (err) {
       console.log(err);
       return res.status(500).json({ error: 'Error fetching stats' });
     } else {
+ //     console.log('today stats = ' +stats[1][0].today_pending_reservations);
       const reservationsGeneralStats = stats[0][0];
+      const todayReservationsStats = stats[1][0];
       const currentYear = new Date().getFullYear();
       const months = Array.from({ length: 12 }, (_, i) => `${currentYear}-${(i + 1).toString().padStart(2, '0')}`);
      
@@ -136,7 +141,7 @@ adminRouter.get('/reservationsStats', (req, res) => {
           }
 
           // Send the result to the client
-          res.json({genralStats:reservationsGeneralStats,monthsDetailsStats:monthsReservationsStats});
+          res.json({genralStats:reservationsGeneralStats,todayStats:todayReservationsStats,monthsDetailsStats:monthsReservationsStats});
         })
         .catch((err) => {
           console.error('Error retrieving monthly revenues:', err);
@@ -149,4 +154,3 @@ adminRouter.get('/reservationsStats', (req, res) => {
 
 
 export default adminRouter;
-

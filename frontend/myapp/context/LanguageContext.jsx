@@ -3,7 +3,7 @@ import React, { createContext, useState, useContext } from 'react';
 const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
-  const [currentLanguage, setCurrentLanguage] = useState('en');
+  const [currentLanguage, setCurrentLanguage] = useState('ar');
 
   const toggleLanguage = () => {
     setCurrentLanguage(prevLang => {
@@ -19,11 +19,13 @@ export const LanguageProvider = ({ children }) => {
   };
 
   // Update document direction based on language
+/*
   React.useEffect(() => {
     document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.lang = currentLanguage;
   }, [currentLanguage]);
 
+*/
   return (
     <LanguageContext.Provider value={{ currentLanguage, toggleLanguage }}>
       {children}

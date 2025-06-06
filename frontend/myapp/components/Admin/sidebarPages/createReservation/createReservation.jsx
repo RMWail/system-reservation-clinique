@@ -3,18 +3,21 @@ import './createReservation.scss'
 import Swal from 'sweetalert2';
 import { useLanguage } from '../../../../context/LanguageContext';
 import { translations } from '../../../../translations/translations';
-import { useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { toast,Toaster } from 'sonner';
 import { isValidString,isValidTelephone } from '../../../../utils/formValidation';
 import { useAppointmentBooking } from '../../../../hooks/useAppointmentBooking';
+import LoadingData from '../../../loadingData/LoadingData';
+import LoadingError from '../../../loadingError/LoadingError';
+
+
 function CreateReservation() {
-  const navigate = useNavigate();
+  const {loading,error,doctors,addNewAppointement} = useAppointmentBooking();
     const { currentLanguage, toggleLanguage } = useLanguage();
   const t = translations[currentLanguage];
   const [selectedDate, setSelectedDate] = useState(null);
- const {doctors,addNewAppointement} = useAppointmentBooking();
+
 
   const [errors,setErrors] = useState({});
   const [indexDay,setIndexDay] = useState(null);
@@ -85,71 +88,70 @@ const handleChange = (e) => {
     const validationErrors = {};
 
     if(!formData.name.trim()){
-      validationErrors.name = "Patient name is required";
+      validationErrors.name = "Le nom du patient est requis!";
     }
 
     if(!isValidString(formData.name)) {
-      validationErrors.name = 'Please put a valid full name !';
+      validationErrors.name = 'Veuillez indiquer un nom complet valide !';
      }
 
      if(!isValidTelephone(formData.phone)){
-      validationErrors.phone = 'Please enter a valid telephone starts with 05 or 06 or 07 !';
+      validationErrors.phone = 'Veuillez entrer un numéro de téléphone valide !';
      }
 
-     if(formData.gender ==='') {
-      validationErrors.gender = 'Please choose a gender!';
+     if(formData.gender =='') {
+      validationErrors.gender = 'Veuillez choisir un sexe !';
      }
      if(formData.age ==''){
-      validationErrors.age = 'Please choose the age!';
+      validationErrors.age = 'Veuillez choisir l\'age !';
      }
      if(formData.age < 0) {
-      validationErrors.age = 'Please choose a valid age!';
+      validationErrors.age = 'Veuillez choisir l\'age !';
      } 
 
      if(formData.doctorId == undefined){
       console.log("yes1");
-      validationErrors.doctor = 'Please choose a doctor for the appointement!'
+      validationErrors.doctor = 'Veuillez choisir un médecin pour le rendez-vous!'
      }
      if(formData.doctorId ==''){
       console.log("yes2");
-      validationErrors.doctor = 'Please choose a doctor for the appointement!'
+      validationErrors.doctor = 'Veuillez choisir un médecin pour le rendez-vous!'
      }
      if(formData.doctorInfo ==''){
       console.log("yes3");
-      validationErrors.doctor = 'Please choose a doctor for the appointement!'
+      validationErrors.doctor = 'Veuillez choisir un médecin pour le rendez-vous!'
      }
      
      if(formData.date == null) {
-      validationErrors.date = 'Please choose a date for the appointement!'
+      validationErrors.date = 'Veuillez choisir une date pour le rendez-vous!'
      }
      
      if(formData.date != null && (formData.doctorId != undefined && formData.doctorId !='') ) {
       const doctor = doctors.find((doctor)=>doctor.medecin_Id == formData.doctorId);
-      if(doctor.medecin_availability[indexDay]!=='1'){
-       validationErrors.date = 'The doctor is not available on this day,please choose another date!';
-       Swal.fire({
-         icon:'warning',
-         iconColor:'orange',
-         title:'Doctor unavailable',
-         text:`Doctor ${doctor.nomPrenom} does not work on this day`,
-         showConfirmButton:false,
-         timer:3500,
-       })
-           
-      }
+   if(doctor.medecin_availability[indexDay]!=='1'){
+    validationErrors.date = 'Le médecin n\'est pas disponible ce jour-là, veuillez choisir une autre date !';
+    Swal.fire({
+      icon:'warning',
+      iconColor:'orange',
+      title:'Le médecin n\'est pas disponible ce jour-là',
+      text:`Le médecin ${doctor.nomPrenom} n\'est pas disponible ce jour-là!`,
+      showConfirmButton:false,
+      timer:3500,
+    })
+   }
      }
 
      setErrors(validationErrors);
 
     if(Object.keys(validationErrors).length === 0) {
       Swal.fire({
-        title: "Create Reservation",
-        text: "Are you sure you want to create this reservation?",
+        title: "Créer une réservation",
+        text: "Êtes-vous sûr de vouloir créer cette réservation?",
         icon: "question",
         showCancelButton: true,
         confirmButtonColor: "#2196f3",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, create it!"
+        confirmButtonText: "Oui, créer!"
       }).then(async (result) => {
         if (result.isConfirmed) {
           const addNewAppointementResponse = await addNewAppointement(formData);
@@ -157,8 +159,8 @@ const handleChange = (e) => {
             if(addNewAppointementResponse.status == 200) {
 
               Swal.fire({
-                title: t.appointment.successTitle,
-                text: t.appointment.successMessage,
+                title: `Succès!`,
+                text: `Vous avez réservé un rendez-vous avec succès!`,
                 icon: 'success',
                 iconColor:"green",
                 showConfirmButton:false,
@@ -182,18 +184,30 @@ const handleChange = (e) => {
     }
   };
 
+  if(loading) {
+   return (
+    <LoadingData />
+   );
+  }
+
+  if(error) {
+    return (
+      <LoadingError />
+    );
+  }
+
   return (
       <>
           <Toaster position="top-center" richColors=""/>
-    <div className='reservationControllerFather'>
+    <div className='reservationControllerFather' dir='ltr'>
       
       <div className={`addReservationCard`}>
-        <h2 className="formTitle">Create New Reservation</h2>
+        <h2 className="formTitle">Créer une nouvelle réservation</h2>
         <form onSubmit={handleCreateReservation}>
           <div className="formGroup">
             <input 
               type="text" 
-              placeholder='Full Name' 
+              placeholder='Nom et Prénom' 
               name='name' 
               value={formData.name} 
               onChange={handleChange}
@@ -205,7 +219,7 @@ const handleChange = (e) => {
           <div className="formGroup">
             <input 
               type="tel" 
-              placeholder='Phone Number' 
+              placeholder='Télephone' 
               name='phone' 
               value={formData.phone} 
               onChange={handleChange}
@@ -222,9 +236,9 @@ const handleChange = (e) => {
                 onChange={handleChange}
                 
               >
-                <option value="">Select Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
+                <option value="">Choisir le genre</option>
+                <option value="male">Homme</option>
+                <option value="female">Famme</option>
               </select>
               {errors.gender && <span style={{color:'red'}}>{errors.gender}</span>}
             </div>
@@ -248,7 +262,7 @@ const handleChange = (e) => {
               onChange={handleChange}
               
             >
-              <option value="">Select Doctor</option>
+              <option value="">Choisir un médecin</option>
               {doctors.map((doctor) => (
                 <option key={doctor.medecin_Id} value={doctor.medecin_Id}>
                   Dr. {doctor.nomPrenom} - {doctor.medecin_Specialite}
@@ -264,7 +278,7 @@ const handleChange = (e) => {
               onChange={handleDateChange}
               showTimeSelect={false}
               dateFormat="dd-MM-yyyy"
-              placeholderText="Select Date"
+              placeholderText="Choisir la date"
               minDate={new Date()}
               maxDate={getMaxDate()}
               className="datePicker"
@@ -274,8 +288,8 @@ const handleChange = (e) => {
           {errors.date && <span style={{color:'red'}}>{errors.date}</span>}
           <div className="buttonContainer">
             <div className="buttonGroup">
-              <button type="submit" className='createButton'>Create Reservation</button>
-              <button type="button" className='cancelButton' onClick={handleCancel}>Cancel</button>
+              <button type="submit" className='createButton'>Créer </button>
+              <button type="button" className='cancelButton' onClick={handleCancel}>Annulé</button>
             </div>
           </div>
         </form>

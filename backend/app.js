@@ -34,7 +34,7 @@ app.use(cors({
   methods: ["GET","POST"]
 }
 ));
- app.use(morgan('short'))
+ // app.use(morgan('short'))
 app.use(bodyParser.json()); // for parsing application/x-www-form-urlencoded
 app.use(express.urlencoded({extended:true,parameterLimit:100000,limit:"500mb"}));
 

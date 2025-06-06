@@ -17,7 +17,7 @@ export const useStatistics = ()=> {
             return response.data;
            
         },
-        staleTime:1000*30*60,
+        staleTime:Infinity,
     })
 
     return {
