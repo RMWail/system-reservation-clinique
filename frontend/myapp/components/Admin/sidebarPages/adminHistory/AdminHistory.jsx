@@ -18,8 +18,9 @@ function AdminHistory() {
   const [dateFilter, setDateFilter] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedReservation, setSelectedReservation] = useState(null);
+  const tableHeads = ['Reservation N°','Nom du patient','Téléphone','Date de rendez-vous','Date de gestion','Statut','Actions'];
 
-
+/*
 useEffect(()=>{
   socketRef.current = io(`${apiUrl}`,{
     auth:{secret:'this is from AdminHistory component'},
@@ -31,12 +32,12 @@ useEffect(()=>{
     console.log('new Appointement has reached AppointmentsHistory ');
     console.log('reservation order in history = '+newAppointment.reserv_Order);
 
-    /**
-     *     queryClient.setQueryData(['allAppointments'],(oldAppointments)=>{
+    
+          queryClient.setQueryData(['allAppointments'],(oldAppointments)=>{
       if(!Array.isArray(oldAppointments)) return [newAppointment];
       return [newAppointment, ...oldAppointments];
      })
-     */
+     
 
      queryClient.invalidateQueries({queryKey:['allAppointments']});
         
@@ -49,6 +50,7 @@ useEffect(()=>{
   }
 
 },[]);
+*/
 
   useEffect(() => {
     applyFilters();
@@ -153,13 +155,10 @@ useEffect(()=>{
         <table className="history-table">
           <thead>
             <tr>
-              <th>Reservation N°</th>
-              <th>Nom du patient</th>
-              <th>Téléphone</th>
-              <th>Date de rendez-vous</th>
-              <th>Date de gestion</th>
-              <th>Statut</th>
-              <th>Actions</th>
+
+ {tableHeads.map((head,index)=>(
+  <th key={index}>{head}</th>
+ ))}
             </tr>
           </thead>
           <tbody>

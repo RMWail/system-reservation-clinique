@@ -32,6 +32,7 @@
     "react-push-notification": "^1.5.4",
     "react-router-dom": "^6.25.1",
     "react-toastify": "^10.0.5",
+    "react-window": "^1.8.11",
     "recharts": "^2.13.0",
     "sass": "^1.77.8",
     "socket.io-client": "^4.8.0",

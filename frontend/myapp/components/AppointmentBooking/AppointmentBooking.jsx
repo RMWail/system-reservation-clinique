@@ -224,7 +224,7 @@ function AppointmentBooking() {
               // --- Save file ---
               doc.save(`reservation-ticket-${data.reservationNbr}.pdf`);
               
-                  navigate('/');
+                  navigate('/');// the hole world is talking about this 
                 }
                 else {
                   navigate('/doctors');

@@ -135,7 +135,7 @@ function Login() {
                setSuccess(usernamePhoneRef.current);
                setSuccess(passwordRef.current);
                if(response.data.account=='normal')
-               navigate('/admin/create-reservation');
+               navigate('/admin/appointments');
              else 
              navigate('/adminSuper');
              }

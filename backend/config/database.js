@@ -9,6 +9,7 @@ const DB_NAME = process.env.DB_NAME;
 const DB_PASSWORD = process.env.DB_PASSWORD;
 const DB_PORT = process.env.DB_PORT;
 
+/*
 
 const database = new Sequelize(
   DB_NAME,
@@ -25,8 +26,9 @@ database.authenticate().then(()=>{
 }).catch((error)=>{
   console.error("Unabale to connect to the database: "+error);
 })
+*/
 
-/*
+
 const database = mysql.createConnection({
   host: DB_HOST,
   user: DB_USER,
@@ -43,6 +45,6 @@ database.connect((err)=>{
   }
   console.log("connected successfuly to the Database ");
 });
-*/
+
 
 export default database;
