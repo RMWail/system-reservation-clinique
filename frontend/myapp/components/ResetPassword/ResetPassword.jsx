@@ -1,6 +1,5 @@
 import React, {useRef, useState} from 'react'
 import { useNavigate,useParams } from 'react-router-dom'
-import { encryptWithFixedIV } from '../../../../backend/encryptionMethods/encryptionDecryptionMethods';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import './ResetPassword.scss';
