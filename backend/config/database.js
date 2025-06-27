@@ -1,7 +1,6 @@
 import mysql from 'mysql2';
 import dotenv from 'dotenv';
 import {Sequelize} from 'sequelize';
-
 dotenv.config();
 const DB_HOST = process.env.DB_HOST;
 const DB_USER = process.env.DB_USER;
@@ -28,6 +27,7 @@ database.authenticate().then(()=>{
 })
 */
 
+console.log(DB_USER,DB_PASSWORD,DB_HOST,DB_PORT,DB_NAME);
 
 const urlDb = `mysql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
 

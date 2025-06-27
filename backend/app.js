@@ -15,12 +15,12 @@ import { dirname } from 'path';
 import { Server as socketio } from 'socket.io';
 import dotenv from 'dotenv';
 
+dotenv.config();
 
 // Path to the .ttf or .otf font file
   // This will output the Base64 string
 
 
-dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const port = process.env.PORT || 3000;

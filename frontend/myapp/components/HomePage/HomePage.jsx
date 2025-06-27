@@ -52,7 +52,7 @@ const HomePage = () => {
       </div>
 
       <nav className="navbar">
-        <div className="nav-logo">Errazi clinique</div>
+        <div className="nav-logo">Remadna clinique</div>
         <div className="nav-links">
           <a href="#about">{t.nav.about}</a>
           <a href="#services">{t.nav.services}</a>
@@ -115,7 +115,7 @@ const HomePage = () => {
           <div className="contact-info">
             <MdEmail className="icon" />
             <h3>{t.contact.emergency}</h3>
-            <p>raziclinique@gmail.com</p>
+            <p>remadnaclinique@gmail.com</p>
           </div>
           
         </div>
@@ -136,7 +136,7 @@ const HomePage = () => {
           <div className="footer-section">
             <h3>{t.footer.contactInfo}</h3>
             <p>123 Medical Center Dr.</p>
-            <p>contact@medicare.com</p>
+            <p>remadnaclinique@medicare.com</p>
           </div>
         </div>
         <div className="footer-bottom">
