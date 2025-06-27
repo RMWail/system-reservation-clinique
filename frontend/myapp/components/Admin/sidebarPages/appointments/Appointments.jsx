@@ -8,7 +8,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useAppointments } from '../../../../hooks/admin-hooks/useAppointements';
 import LoadingData from '../../../loadingData/LoadingData';
 import LoadingError from '../../../loadingError/LoadingError';
-import {AppointmentsTable} from './appointmentsTable';
+import {AppointmentsTable} from './AppointmentsTable';
 import Filters from './Filters';
 import SelectedAppointmentCard from './SelectedAppointmentCard';
 
