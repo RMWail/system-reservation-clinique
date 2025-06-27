@@ -4,7 +4,6 @@ import superAdminRouting from './routes/superAdminRouting.js';
 import loginRouting from './routes/loginRouting.js'
 import patientRouting from './routes/patientRouting.js';
 import forgetAndResetPassRouting from './routes/forgetAndResetPass.js';
-import accountVerificationRouting from './routes/accountVerification.js';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import http from 'http';
@@ -64,7 +63,7 @@ app.use('/',superAdminRouting);
 app.use('/',loginRouting);  // The routing of login and sign up operations
 app.use('/',patientRouting);  // The routing of the customer operations
 app.use('/',forgetAndResetPassRouting); // The routing of forget and reset password for customer
-app.use('/',accountVerificationRouting); // The routing of customer account otp code verification
+
 /*
 if(isMainThread){
 
