@@ -1,5 +1,5 @@
 import { FixedSizeList as List } from "react-window";
-import { AppointmentRow } from "./appointmentsRow";
+import { AppointmentRow } from "./AppointmentsRow";
 
 export const AppointmentsTable = ({
   appointments,
