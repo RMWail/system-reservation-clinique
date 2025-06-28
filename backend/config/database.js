@@ -27,11 +27,19 @@ database.authenticate().then(()=>{
 })
 */
 
-console.log(DB_USER,DB_PASSWORD,DB_HOST,DB_PORT,DB_NAME);
 
 const urlDb = `mysql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
 
-const database = mysql.createConnection(urlDb);
+//const database = mysql.createConnection(urlDb);
+
+const database = mysql.createConnection({
+  host: DB_HOST,
+  port: DB_PORT,
+  user: DB_USER,
+  password: DB_PASSWORD,
+  database: DB_NAME,
+  charset: 'utf8mb4_general_ci'
+});
 
 database.connect((err)=>{
 
